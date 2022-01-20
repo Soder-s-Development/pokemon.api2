@@ -1,1 +1,0 @@
-alter table pokemon add  tipo varchar(50) after nivel;

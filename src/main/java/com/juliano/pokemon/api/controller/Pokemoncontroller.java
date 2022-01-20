@@ -7,6 +7,7 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -16,22 +17,20 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.juliano.pokemon.api.Model.Pokemon;
+import com.juliano.pokemon.api.Model.PokemonUnico;
+import com.juliano.pokemon.repository.PokemonRepository;
 
 import lombok.AllArgsConstructor;
 
 @RestController
 @RequestMapping("/pokemons")
 @AllArgsConstructor
+@CrossOrigin(origins = {"http://localhost", "http://127.0.0.1", "http://0.0.0.0", "x-requested-with", "content-type"}, originPatterns = "*")
 public class Pokemoncontroller {
-	
+	@Autowired
 	private PokemonRepository pokemonRepository;
 	
-
-	public Pokemoncontroller(PokemonRepository pokemonRepository) {
-		super();
-		this.pokemonRepository = pokemonRepository;
-	}
-
+	
 	@GetMapping
 	public List<Pokemon> listar() {
 		return pokemonRepository.findAll();
@@ -58,6 +57,13 @@ public class Pokemoncontroller {
 			}
 			
 			return ResponseEntity.notFound().build();*/
+	}
+	
+	@PostMapping("/capturar")
+	public PokemonUnico capturar(@Valid @RequestBody Pokemon pkm, String apelido) {
+		PokemonUnico pu = null;
+		pu.setAllNewValues(pkm, apelido);
+		return pu;
 	}
 			
 	
