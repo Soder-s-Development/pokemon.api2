@@ -18,7 +18,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.juliano.pokemon.api.Model.Pokemon;
 import com.juliano.pokemon.api.Model.PokemonUnico;
-import com.juliano.pokemon.repository.PokemonRepository;
+import com.juliano.pokemon.service.PokemonService;
+import com.juliano.pokemon.service.PokemonUnicoService;
 
 import lombok.AllArgsConstructor;
 
@@ -27,43 +28,31 @@ import lombok.AllArgsConstructor;
 @AllArgsConstructor
 @CrossOrigin(origins = {"http://localhost", "http://127.0.0.1", "http://0.0.0.0", "x-requested-with", "content-type"}, originPatterns = "*")
 public class Pokemoncontroller {
-	@Autowired
-	private PokemonRepository pokemonRepository;
 	
+	@Autowired
+	private PokemonService pservice;
+	@Autowired
+	private PokemonUnicoService puservice;
 	
 	@GetMapping
 	public List<Pokemon> listar() {
-		return pokemonRepository.findAll();
+		return pservice.findAll();
 	}
 
 	@PostMapping("/cadastrar")
 	@ResponseStatus(HttpStatus.CREATED)
-	public Pokemon cadastrarPokemon(@Valid @RequestBody Pokemon pokemon){
-		return pokemonRepository.save(pokemon);
+	public boolean cadastrarPokemon(@Valid @RequestBody Pokemon pokemon){
+		return pservice.salvar(pokemon);
 	}
 	
 	@GetMapping("/{pokemonId}")
 	public ResponseEntity<Pokemon> buscar(@PathVariable Long pokemonId) {
-	
-		return pokemonRepository.findById(pokemonId)
-				.map(ResponseEntity::ok)
-				.orElse(ResponseEntity.notFound().build());
-		
-			/* codigo não otimizado x codigo otimizado, ambos funcionam
-			 * Optional<Cliente> cliente = clienteRepository.findById(clinentId);
-		
-			if(cliente.isPresent()) {
-				return ResponseEntity.ok(cliente.get());
-			}
-			
-			return ResponseEntity.notFound().build();*/
+		return pservice.retornarPk(pokemonId);
 	}
 	
-	@PostMapping("/capturar")
-	public PokemonUnico capturar(@Valid @RequestBody Pokemon pkm, String apelido) {
-		PokemonUnico pu = null;
-		pu.setAllNewValues(pkm, apelido);
-		return pu;
+	@PostMapping("/capturar/{id}/{apelido}")
+	public PokemonUnico capturar(@PathVariable Long id, @PathVariable String apelido) {
+		return (PokemonUnico) puservice.capturar(id, apelido);
 	}
 			
 	

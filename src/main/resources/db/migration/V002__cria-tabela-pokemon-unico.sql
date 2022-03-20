@@ -1,5 +1,5 @@
 create table pokemon_unico(
-	id varchar(255) not null,
+	id bigint not null auto_increment,
 	id_pokemon bigint not null,
     apelido varchar(50) not null,
     tipo varchar(100) not null,
