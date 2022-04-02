@@ -36,6 +36,12 @@ public class PokemonUnico{
 	private int novo_spd;
 	private int novo_spe;
 	
+	private int dias_de_vida = 999;
+	private int dias_vivido = 0;
+	private String conquistas;
+	private String crias;
+	private boolean vivo = true;
+	private String genero;
 	
 	public PokemonUnico(Pokemon pkm, String apelido) {
 		this.nivel = 1;
@@ -48,6 +54,12 @@ public class PokemonUnico{
 		this.novo_spa = pkm.getSpa()+(int)Math.floor(Math.random()*(10-0+1)+0);
 		this.novo_spd = pkm.getSpd()+(int)Math.floor(Math.random()*(10-0+1)+0);
 		this.novo_spe = pkm.getSpe()+(int)Math.floor(Math.random()*(10-0+1)+0);
+		
+		if((int)Math.floor(Math.random()*(10-0+1)+0)%2 == 0) {
+			this.genero = "M";
+		}else {
+			this.genero = "F";
+		}
 		
 		System.out.println("pokemon capturado! Apelido -> "+this.apelido);
 	}
@@ -62,7 +74,7 @@ public class PokemonUnico{
 		this.novo_spd = pkm.getSpd()+(int)Math.floor(Math.random()*(10-0+1)+0);
 		this.novo_spe = pkm.getSpe()+(int)Math.floor(Math.random()*(10-0+1)+0);
 		
-		System.out.println("pokemon capturado! Apelido -> "+this.apelido);
+		System.out.println("pokemon evoluído! Apelido -> "+this.apelido);
 	
 	}
 }
