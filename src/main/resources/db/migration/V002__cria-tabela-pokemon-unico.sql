@@ -10,6 +10,11 @@ create table pokemon_unico(
    	novo_spd int,
    	novo_spe int,
    	novo_hp int,
+   	dias_de_vida int not null,
+   	dias_vivido int,
+   	conquistas varchar(512),
+   	crias string varchar(256),
+	vivo  bool not null
     primary key (id)
 );
 
