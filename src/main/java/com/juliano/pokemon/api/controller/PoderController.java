@@ -1,5 +1,6 @@
 package com.juliano.pokemon.api.controller;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,6 +20,7 @@ import lombok.AllArgsConstructor;
 @CrossOrigin(origins = {"http://localhost", "http://127.0.0.1", "http://0.0.0.0", "x-requested-with", "content-type"}, originPatterns = "*")
 public class PoderController {
 
+	@Autowired
 	private PoderRepository prepo;
 	
 	@PostMapping
