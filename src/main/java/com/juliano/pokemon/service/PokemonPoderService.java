@@ -126,7 +126,7 @@ public class PokemonPoderService {
 		 			break;
 		 		}
 		 }
-		if (pp.getTipo().contains("atk")) {
+		if (pp.getTipo().contains("physical")) {
 			return aatk;
 		}
 		return aspa;

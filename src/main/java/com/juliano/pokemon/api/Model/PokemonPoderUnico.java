@@ -14,16 +14,14 @@ import lombok.Setter;
 @AllArgsConstructor
 @Getter
 @Setter
-public class PokemonPoder {
+public class PokemonPoderUnico {
 
 	@EqualsAndHashCode.Include
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
-	private String nome;
-	private String descricao;
-	private int danobase;
-	private String efeito;
-	private String tipo;
+	private long id_pkm_unico;
+	private long id_poder;
+	private int novo_dano;
 	
 }
