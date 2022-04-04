@@ -1,9 +1,31 @@
 package com.juliano.pokemon.service;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
 import com.juliano.pokemon.api.Model.Pokemon;
 import com.juliano.pokemon.api.Model.PokemonPoder;
+import com.juliano.pokemon.api.Model.PokemonPoderUnico;
+import com.juliano.pokemon.repository.PokemonPoderUnicoRepository;
 
+import lombok.AllArgsConstructor;
+
+@Service
+@AllArgsConstructor
 public class PokemonPoderService {
+	
+	private PokemonPoderUnicoRepository pkmpur;
+	
+	
+	public PokemonPoderUnico createFirstMove(long pkmunicoid, PokemonPoder idpoder, int novodano) {
+		PokemonPoderUnico pkmpu = new PokemonPoderUnico();
+		pkmpu.setId_pkm_unico(pkmunicoid);
+		pkmpu.setId_poder(idpoder.getId());
+		pkmpu.setNovo_dano(0);
+		
+		return pkmpur.save(pkmpu);
+	}
+	
 	
 	public int calculaDano(Pokemon pkm_atk, Pokemon pkm_def, PokemonPoder pp) {
 		int aatk = (pp.getDanobase()+pkm_atk.getAtk()+pkm_atk.getSpe())-(pkm_def.getDef()+pkm_def.getSpe());

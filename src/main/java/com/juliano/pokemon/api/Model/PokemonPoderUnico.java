@@ -12,7 +12,6 @@ import lombok.Getter;
 import lombok.Setter;
 
 @Entity
-@AllArgsConstructor
 @Getter
 @Setter
 @Table(name="poder_unico")
