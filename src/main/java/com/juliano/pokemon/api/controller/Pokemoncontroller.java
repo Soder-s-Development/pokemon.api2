@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.juliano.pokemon.api.Model.Pokemon;
 import com.juliano.pokemon.api.Model.PokemonUnico;
+import com.juliano.pokemon.repository.PokemonUnicoRepository;
 import com.juliano.pokemon.service.PokemonService;
 import com.juliano.pokemon.service.PokemonUnicoService;
 
@@ -28,6 +29,10 @@ import lombok.AllArgsConstructor;
 @AllArgsConstructor
 @CrossOrigin(origins = {"http://localhost", "http://127.0.0.1", "http://0.0.0.0", "x-requested-with", "content-type"}, originPatterns = "*")
 public class Pokemoncontroller {
+	
+//
+//	@Autowired
+//	private PokemonUnicoRepository pkmur;
 	
 	@Autowired
 	private PokemonService pservice;
@@ -55,5 +60,9 @@ public class Pokemoncontroller {
 		return (PokemonUnico) puservice.capturar(id, apelido);
 	}
 			
-	
+//	@GetMapping("/unico/{id}")
+//	public PokemonUnico getPoke(@PathVariable Long id) {
+//		PokemonUnico pkmu = pkmur.findById(id).get();
+//		return pkmu;
+//	}
 }
