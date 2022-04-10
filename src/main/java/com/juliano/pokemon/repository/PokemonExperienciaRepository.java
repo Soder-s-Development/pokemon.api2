@@ -1,5 +1,11 @@
 package com.juliano.pokemon.repository;
 
-public interface PokemonExperienciaRepository {
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
+
+import com.juliano.pokemon.api.Model.PokemonExperiencia;
+
+@Repository
+public interface PokemonExperienciaRepository extends JpaRepository<PokemonExperiencia, Long>{
 
 }

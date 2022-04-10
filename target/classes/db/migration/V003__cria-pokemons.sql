@@ -76,14 +76,14 @@ INSERT INTO pokemon (nome, tipo, hp, atk, def, spa, spd, spe) VALUES ("Sandslash
 "ground", 75, 100, 110, 45, 55, 65);
 
 
-INSERT INTO pokemon (nome, tipo, hp, atk, def, spa, spd, spe) VALUES ("Nidoran♀",
+INSERT INTO pokemon (nome, tipo, hp, atk, def, spa, spd, spe) VALUES ("Nidoran-F",
 "poison", 55, 47, 52, 40, 40, 41);
 INSERT INTO pokemon (nome, tipo, hp, atk, def, spa, spd, spe) VALUES ("Nidorina",
 "poison", 70, 62, 67, 55, 55, 56);
 INSERT INTO pokemon (nome, tipo, hp, atk, def, spa, spd, spe) VALUES ("Nidoqueen",
 "poison/ground", 90, 92, 87, 75, 85, 76);
 
-INSERT INTO pokemon (nome, tipo, hp, atk, def, spa, spd, spe) VALUES ("Nidoran♂",
+INSERT INTO pokemon (nome, tipo, hp, atk, def, spa, spd, spe) VALUES ("Nidoran-M",
 "poison", 46, 57, 40, 40, 40, 50);
 INSERT INTO pokemon (nome, tipo, hp, atk, def, spa, spd, spe) VALUES ("Nidorino",
 "poison", 61, 72, 57, 55, 55, 65);

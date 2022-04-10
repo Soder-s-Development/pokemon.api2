@@ -3,8 +3,10 @@ package com.juliano.pokemon.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.juliano.pokemon.api.Model.PokemonExperiencia;
 import com.juliano.pokemon.api.Model.PokemonUnico;
 import com.juliano.pokemon.repository.PoderRepository;
+import com.juliano.pokemon.repository.PokemonExperienciaRepository;
 import com.juliano.pokemon.repository.PokemonRepository;
 import com.juliano.pokemon.repository.PokemonUnicoRepository;
 
@@ -17,14 +19,16 @@ public class PokemonUnicoService {
 	private PokemonRepository pkRepository;
 	private PokemonUnicoRepository pkuRepository;
 	private PoderRepository pr;
+	private PokemonExperienciaRepository pmkER;
 	
 	@Autowired
 	private PokemonPoderService pkuService;
 	
-	
 	public Object capturar(Long id, String apelido) {
 		PokemonUnico pkmu = pkuRepository.save(new PokemonUnico(pkRepository.getById(id), apelido));
 		pkuService.createFirstMove(pkmu.getId(), pr.getById((long) 1), 0);
+		PokemonExperiencia pkmE = new PokemonExperiencia(pkmu.getId());
+		pmkER.save(pkmE);
 		return pkmu;
 	}
 }
