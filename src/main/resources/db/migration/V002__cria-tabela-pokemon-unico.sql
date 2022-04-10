@@ -11,6 +11,15 @@ create table pokemon_unico(
    	novo_spe int,
    	novo_hp int,
    	
+   	poder1 bigint,
+   	adicional_poder1 int,
+   	poder2 bigint,
+   	adicional_poder2 int,
+   	poder3 bigint,
+   	adicional_poder3 int,
+   	poder4 bigint,
+  	adicional_poder4 int, 	
+   	
    	dias_de_vida int not null,
    	dias_vivido int,
    	conquistas varchar(512),

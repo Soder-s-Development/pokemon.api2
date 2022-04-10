@@ -1,9 +1,12 @@
 package com.juliano.pokemon.api.controller;
 
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,16 +24,21 @@ import lombok.AllArgsConstructor;
 public class PoderController {
 
 	@Autowired
-	private PoderRepository prepo;
+	private PoderRepository pr;
 	
 	@PostMapping
 	@ResponseStatus(HttpStatus.CREATED)
 	public Object cadastrarPoder(@RequestBody PokemonPoder p) {
-		return prepo.save(p);
+		return pr.save(p);
 	}
 	
 	@GetMapping
 	public java.util.List<PokemonPoder> getPoderes(){
-		return prepo.findAll();
+		return pr.findAll();
+	}
+	
+	@GetMapping("/{id}")
+	public Optional<PokemonPoder> getPoder(@PathVariable Long id) {
+		return pr.findById(id);
 	}
 }

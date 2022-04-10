@@ -5,25 +5,35 @@ import org.springframework.stereotype.Service;
 
 import com.juliano.pokemon.api.Model.Pokemon;
 import com.juliano.pokemon.api.Model.PokemonPoder;
-import com.juliano.pokemon.api.Model.PokemonPoderUnico;
-import com.juliano.pokemon.repository.PokemonPoderUnicoRepository;
+import com.juliano.pokemon.api.Model.PokemonUnico;
+import com.juliano.pokemon.repository.PokemonUnicoRepository;
 
 import lombok.AllArgsConstructor;
 
 @Service
 @AllArgsConstructor
 public class PokemonPoderService {
+	@Autowired
+	private PokemonUnicoRepository pkmur;
 	
-	private PokemonPoderUnicoRepository pkmpur;
-	
-	
-	public PokemonPoderUnico createFirstMove(long pkmunicoid, PokemonPoder idpoder, int novodano) {
-		PokemonPoderUnico pkmpu = new PokemonPoderUnico();
-		pkmpu.setId_pkm_unico(pkmunicoid);
-		pkmpu.setId_poder(idpoder.getId());
-		pkmpu.setNovo_dano(0);
+	public PokemonUnico atualizaPoderes(long pkmuid, long idpoder, int position) {
+		PokemonUnico pkmu = pkmur.findById(pkmuid).get();
+		switch (position) {
+		case 2:
+			pkmu.setPoder2(idpoder);
+			break;
+		case 3:
+			pkmu.setPoder3(idpoder);
+			break;
+		case 4:
+			pkmu.setPoder4(idpoder);
+			break;
+		default:
+			pkmu.setPoder1(idpoder);
+			break;
+		}
 		
-		return pkmpur.save(pkmpu);
+		return pkmur.save(pkmu);
 	}
 	
 	

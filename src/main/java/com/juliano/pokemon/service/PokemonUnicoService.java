@@ -26,7 +26,7 @@ public class PokemonUnicoService {
 	
 	public Object capturar(Long id, String apelido) {
 		PokemonUnico pkmu = pkuRepository.save(new PokemonUnico(pkRepository.getById(id), apelido));
-		pkuService.createFirstMove(pkmu.getId(), pr.getById((long) 1), 0);
+		pkuService.atualizaPoderes(pkmu.getId(), 1, 1);
 		PokemonExperiencia pkmE = new PokemonExperiencia(pkmu.getId());
 		pmkER.save(pkmE);
 		return pkmu;

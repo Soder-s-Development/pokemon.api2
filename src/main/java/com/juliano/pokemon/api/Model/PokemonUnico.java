@@ -43,6 +43,16 @@ public class PokemonUnico{
 	private boolean vivo = true;
 	private String genero;
 	
+	private Long poder1;
+	private Long poder2;
+	private Long poder3;
+	private Long poder4;
+	
+	private int adicional_poder1;
+	private int adicional_poder2;
+	private int adicional_poder3;
+	private int adicional_poder4;
+	
 	public PokemonUnico(Pokemon pkm, String apelido) {
 		this.nivel = 1;
 		this.apelido = apelido;
