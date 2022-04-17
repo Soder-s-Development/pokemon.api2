@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -27,7 +28,7 @@ import lombok.AllArgsConstructor;
 @RestController
 @RequestMapping("/pokemons")
 @AllArgsConstructor
-@CrossOrigin(origins = {"http://localhost", "http://127.0.0.1", "http://0.0.0.0", "x-requested-with", "content-type"}, originPatterns = "*")
+@CrossOrigin(origins = {"http://localhost", "http://127.0.0.1", "http://0.0.0.0", "x-requested-with", "content-type"}, originPatterns = "*", methods = {RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT, RequestMethod.DELETE, RequestMethod.PATCH})
 public class Pokemoncontroller {
 	
 //
@@ -55,9 +56,9 @@ public class Pokemoncontroller {
 		return pservice.retornarPk(pokemonId);
 	}
 	
-	@PostMapping("/capturar/{id}/{apelido}")
-	public PokemonUnico capturar(@PathVariable Long id, @PathVariable String apelido) {
-		return (PokemonUnico) puservice.capturar(id, apelido);
+	@PostMapping("/capturar/{id}/{apelido}/{personagem_id}")
+	public PokemonUnico capturar(@PathVariable Long id, @PathVariable String apelido, @PathVariable Long personagem_id) {
+		return (PokemonUnico) puservice.capturar(id, apelido, personagem_id);
 	}
 			
 //	@GetMapping("/unico/{id}")

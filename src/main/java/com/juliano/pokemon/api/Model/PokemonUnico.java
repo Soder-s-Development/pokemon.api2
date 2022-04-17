@@ -32,6 +32,9 @@ public class PokemonUnico{
 	@NotNull
 	private Long id_pokemon;
 	
+	@NotNull
+	private Long personagem_id;
+	
 	
 	private int novo_hp;
 	private int novo_atk;
@@ -60,9 +63,10 @@ public class PokemonUnico{
 	private int hp_atual;
 	private int stamina;
 	
-	public PokemonUnico(Pokemon pkm, String apelido) {
+	public PokemonUnico(Pokemon pkm, String apelido, Long personagemid) {
 		this.nivel = 1;
 		this.apelido = apelido;
+		this.personagem_id = personagemid;
 		this.tipo = pkm.getTipo();
 		this.id_pokemon = pkm.getId();
 		this.novo_hp = pkm.getHp()+(int)Math.floor(Math.random()*(10-0+1)+0);
@@ -71,7 +75,7 @@ public class PokemonUnico{
 		this.novo_spa = pkm.getSpa()+(int)Math.floor(Math.random()*(10-0+1)+0);
 		this.novo_spd = pkm.getSpd()+(int)Math.floor(Math.random()*(10-0+1)+0);
 		this.novo_spe = pkm.getSpe()+(int)Math.floor(Math.random()*(10-0+1)+0);
-		this.hp_atual = pkm.getHp();
+		this.hp_atual = pkm.getHp()*10;
 		this.stamina = pkm.getHp()+pkm.getSpe();
 		
 		if((int)Math.floor(Math.random()*(10-0+1)+0)%2 == 0) {
