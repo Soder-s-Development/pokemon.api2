@@ -6,6 +6,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.validation.constraints.NotNull;
 
+import com.juliano.pokemon.service.PokemonPoderService;
+
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -54,6 +56,9 @@ public class PokemonUnico{
 	private int adicional_poder2;
 	private int adicional_poder3;
 	private int adicional_poder4;
+
+	private int hp_atual;
+	private int stamina;
 	
 	public PokemonUnico(Pokemon pkm, String apelido) {
 		this.nivel = 1;
@@ -66,6 +71,8 @@ public class PokemonUnico{
 		this.novo_spa = pkm.getSpa()+(int)Math.floor(Math.random()*(10-0+1)+0);
 		this.novo_spd = pkm.getSpd()+(int)Math.floor(Math.random()*(10-0+1)+0);
 		this.novo_spe = pkm.getSpe()+(int)Math.floor(Math.random()*(10-0+1)+0);
+		this.hp_atual = pkm.getHp();
+		this.stamina = pkm.getHp()+pkm.getSpe();
 		
 		if((int)Math.floor(Math.random()*(10-0+1)+0)%2 == 0) {
 			this.genero = "M";
@@ -88,5 +95,13 @@ public class PokemonUnico{
 		
 		System.out.println("pokemon evoluído! Apelido -> "+this.apelido);
 	
+	}
+	
+	public Boolean atacar(PokemonPoder poder, Batalha batalha) {
+		if(poder.getDanobase() > this.getStamina()) {
+			return false;
+		}
+		this.setStamina(this.getStamina()-poder.getDanobase());
+		return true;
 	}
 }

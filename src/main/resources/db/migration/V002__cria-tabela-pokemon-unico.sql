@@ -26,6 +26,9 @@ create table pokemon_unico(
    	crias varchar(256),
    	genero varchar(10) not null,
 	vivo  bool not null,
+	hp_atual int,
+	stamina int,
+	
 	
     primary key (id)
 );
