@@ -3,6 +3,7 @@ package com.juliano.pokemon.api.controller;
 import javax.validation.Valid;
 
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -34,5 +35,9 @@ public class BolsaController {
 	@PatchMapping("/item/{id}/{item}")
 	public Bolsa salvarItem(@PathVariable Long id, @PathVariable String item) {
 		return bls.atualizarItem(id, item);		
+	}
+	@GetMapping("{id}")
+	public Bolsa getBolsa(@PathVariable Long id) {
+		return bls.getBolsa(id);
 	}
 }

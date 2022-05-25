@@ -75,4 +75,7 @@ public class BolsaService {
 		b.setItens(newArrayOfObjects);
 		return blsr.save(b);
 	}
+	public Bolsa getBolsa(Long id) {
+		return this.blsr.findById(id).get();
+	}
 }
