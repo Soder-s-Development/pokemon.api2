@@ -20,7 +20,6 @@ public class PokemonService {
 	public List<Pokemon> findAll() {
 		return pokemonRepository.findAll();
 	}
-
 	public boolean salvar(Pokemon pk) {
 		return pokemonRepository.save(pk) != null;
 	}
@@ -29,5 +28,8 @@ public class PokemonService {
 		return pokemonRepository.findById(id)
 				.map(ResponseEntity::ok)
 				.orElse(ResponseEntity.notFound().build());
+	}
+	public void CreateWildPokemon(Long id) {
+		
 	}
 }
