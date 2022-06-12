@@ -229,8 +229,8 @@ INSERT INTO pokemon (nome, tipo, hp, atk, def, spa, spd, spe, estado) VALUES ("M
 "eletric/steel", 50, 60, 95, 120, 70, 70, 2);
 
 
-INSERT INTO pokemon (nome, tipo, hp, atk, def, spa, spd, spe) VALUES ("Farfetch d",
-"normal/flying", 52, 90, 55, 58, 62, 60);
+INSERT INTO pokemon (nome, tipo, hp, atk, def, spa, spd, spe, estado) VALUES ("Farfetch d",
+"normal/flying", 52, 90, 55, 58, 62, 60, 0);
 
 
 INSERT INTO pokemon (nome, tipo, hp, atk, def, spa, spd, spe, estado) VALUES ("Doduo",
@@ -265,8 +265,8 @@ INSERT INTO pokemon (nome, tipo, hp, atk, def, spa, spd, spe, estado) VALUES ("G
 "ghost", 60, 65, 60, 130, 75, 110, 3);
 
 
-INSERT INTO pokemon (nome, tipo, hp, atk, def, spa, spd, spe) VALUES ("Onix",
-"rock", 35, 45, 160, 30, 45, 70);
+INSERT INTO pokemon (nome, tipo, hp, atk, def, spa, spd, spe, estado) VALUES ("Onix",
+"rock", 35, 45, 160, 30, 45, 70, 0);
 
 
 INSERT INTO pokemon (nome, tipo, hp, atk, def, spa, spd, spe, estado) VALUES ("Drowzee",
@@ -306,8 +306,8 @@ INSERT INTO pokemon (nome, tipo, hp, atk, def, spa, spd, spe, estado) VALUES ("H
 "fighting", 50, 105, 79, 35, 110, 76, 2);
 
 
-INSERT INTO pokemon (nome, tipo, hp, atk, def, spa, spd, spe) VALUES ("Lickitung",
-"normal", 90, 55, 75, 60, 75, 30);
+INSERT INTO pokemon (nome, tipo, hp, atk, def, spa, spd, spe, estado) VALUES ("Lickitung",
+"normal", 90, 55, 75, 60, 75, 30, 0);
 
 
 INSERT INTO pokemon (nome, tipo, hp, atk, def, spa, spd, spe, estado) VALUES ("Koffing",
@@ -322,16 +322,16 @@ INSERT INTO pokemon (nome, tipo, hp, atk, def, spa, spd, spe, estado) VALUES ("R
 "ground/rock", 105, 130, 120, 45, 45, 40, 2);
 
 
-INSERT INTO pokemon (nome, tipo, hp, atk, def, spa, spd, spe) VALUES ("Chansey",
-"normal", 250, 5, 5, 35, 105, 50);
+INSERT INTO pokemon (nome, tipo, hp, atk, def, spa, spd, spe, estado) VALUES ("Chansey",
+"normal", 250, 5, 5, 35, 105, 50, 0);
 
 
-INSERT INTO pokemon (nome, tipo, hp, atk, def, spa, spd, spe) VALUES ("Tangela",
-"grass", 65, 55, 115, 100, 40, 60);
+INSERT INTO pokemon (nome, tipo, hp, atk, def, spa, spd, spe, estado) VALUES ("Tangela",
+"grass", 65, 55, 115, 100, 40, 60, 0);
 
 
-INSERT INTO pokemon (nome, tipo, hp, atk, def, spa, spd, spe) VALUES ("Kangaskhan",
-"normal", 105, 95, 80, 40, 80, 90);
+INSERT INTO pokemon (nome, tipo, hp, atk, def, spa, spd, spe, estado) VALUES ("Kangaskhan",
+"normal", 105, 95, 80, 40, 80, 90, 0);
 
 
 INSERT INTO pokemon (nome, tipo, hp, atk, def, spa, spd, spe, estado) VALUES ("Horsea",
@@ -352,32 +352,32 @@ INSERT INTO pokemon (nome, tipo, hp, atk, def, spa, spd, spe, estado) VALUES ("S
 "water/psychic", 60, 75, 85, 100, 85, 115, 2);
 
 
-INSERT INTO pokemon (nome, tipo, hp, atk, def, spa, spd, spe) VALUES ("Mr. Mime",
-"psychic/fairy", 40, 45, 65, 100, 120, 90);
+INSERT INTO pokemon (nome, tipo, hp, atk, def, spa, spd, spe, estado) VALUES ("Mr. Mime",
+"psychic/fairy", 40, 45, 65, 100, 120, 90, 0);
 
 
-INSERT INTO pokemon (nome, tipo, hp, atk, def, spa, spd, spe) VALUES ("Scyther",
-"bug/flying", 70, 110, 80, 55, 80, 105);
+INSERT INTO pokemon (nome, tipo, hp, atk, def, spa, spd, spe, estado) VALUES ("Scyther",
+"bug/flying", 70, 110, 80, 55, 80, 105, 0);
 
 
-INSERT INTO pokemon (nome, tipo, hp, atk, def, spa, spd, spe) VALUES ("Jynx",
-"ice/psychic", 65, 50, 35, 115, 95, 95);
+INSERT INTO pokemon (nome, tipo, hp, atk, def, spa, spd, spe, estado) VALUES ("Jynx",
+"ice/psychic", 65, 50, 35, 115, 95, 95, 0);
 
 
-INSERT INTO pokemon (nome, tipo, hp, atk, def, spa, spd, spe) VALUES ("Electabuzz",
-"eletric", 65, 83, 57, 95, 85, 105);
+INSERT INTO pokemon (nome, tipo, hp, atk, def, spa, spd, spe, estado) VALUES ("Electabuzz",
+"eletric", 65, 83, 57, 95, 85, 105, 0);
 
 
 INSERT INTO pokemon (nome, tipo, hp, atk, def, spa, spd, spe, estado) VALUES ("Magmar",
 "fire", 65, 95, 57, 100, 85, 93, 2);
 
 
-INSERT INTO pokemon (nome, tipo, hp, atk, def, spa, spd, spe) VALUES ("Pinsir",
-"bug", 65, 125, 100, 55, 70, 85);
+INSERT INTO pokemon (nome, tipo, hp, atk, def, spa, spd, spe, estado) VALUES ("Pinsir",
+"bug", 65, 125, 100, 55, 70, 85, 0);
 
 
-INSERT INTO pokemon (nome, tipo, hp, atk, def, spa, spd, spe) VALUES ("Tauros",
-"normal", 75, 100, 95, 40, 70, 110);
+INSERT INTO pokemon (nome, tipo, hp, atk, def, spa, spd, spe, estado) VALUES ("Tauros",
+"normal", 75, 100, 95, 40, 70, 110, 0);
 
 
 INSERT INTO pokemon (nome, tipo, hp, atk, def, spa, spd, spe, estado) VALUES ("Magikarp",
@@ -386,12 +386,12 @@ INSERT INTO pokemon (nome, tipo, hp, atk, def, spa, spd, spe, estado) VALUES ("G
 "water/flying", 95, 125, 79, 60, 100, 81, 2);
 
 
-INSERT INTO pokemon (nome, tipo, hp, atk, def, spa, spd, spe) VALUES ("Lapras",
-"water/ice", 130, 85, 80, 85, 95, 60);
+INSERT INTO pokemon (nome, tipo, hp, atk, def, spa, spd, spe, estado) VALUES ("Lapras",
+"water/ice", 130, 85, 80, 85, 95, 60, 0);
 
 
-INSERT INTO pokemon (nome, tipo, hp, atk, def, spa, spd, spe) VALUES ("Ditto",
-"normal", 48, 48, 48, 48, 48, 48);
+INSERT INTO pokemon (nome, tipo, hp, atk, def, spa, spd, spe, estado) VALUES ("Ditto",
+"normal", 48, 48, 48, 48, 48, 48, 0);
 
 
 INSERT INTO pokemon (nome, tipo, hp, atk, def, spa, spd, spe, estado) VALUES ("Eevee",
@@ -405,8 +405,8 @@ INSERT INTO pokemon (nome, tipo, hp, atk, def, spa, spd, spe, estado) VALUES ("F
 "fire", 65, 130, 60, 95, 110, 65, 2);
 
 
-INSERT INTO pokemon (nome, tipo, hp, atk, def, spa, spd, spe) VALUES ("Porygon",
-"normal", 65, 60, 70, 85, 75, 40);
+INSERT INTO pokemon (nome, tipo, hp, atk, def, spa, spd, spe, estado) VALUES ("Porygon",
+"normal", 65, 60, 70, 85, 75, 40, 0);
 
 
 INSERT INTO pokemon (nome, tipo, hp, atk, def, spa, spd, spe, estado) VALUES ("Omanyte",
@@ -421,20 +421,20 @@ INSERT INTO pokemon (nome, tipo, hp, atk, def, spa, spd, spe, estado) VALUES ("K
 "rock/water", 60, 115, 105, 65, 70, 80, 2);
 
 
-INSERT INTO pokemon (nome, tipo, hp, atk, def, spa, spd, spe) VALUES ("Aerodactyl",
-"rock/flying", 80, 105, 65, 60, 75, 130);
+INSERT INTO pokemon (nome, tipo, hp, atk, def, spa, spd, spe, estado) VALUES ("Aerodactyl",
+"rock/flying", 80, 105, 65, 60, 75, 130, 0);
 
 
-INSERT INTO pokemon (nome, tipo, hp, atk, def, spa, spd, spe) VALUES ("Snorlax",
-"normal", 160, 110, 65, 65, 110, 30);
+INSERT INTO pokemon (nome, tipo, hp, atk, def, spa, spd, spe, estado) VALUES ("Snorlax",
+"normal", 160, 110, 65, 65, 110, 30, 0);
 
 
-INSERT INTO pokemon (nome, tipo, hp, atk, def, spa, spd, spe) VALUES ("Articuno",
-"ice/flying", 90, 85, 100, 95, 125, 85);
-INSERT INTO pokemon (nome, tipo, hp, atk, def, spa, spd, spe) VALUES ("Zapdos",
-"eletric/flying", 90, 90, 85, 125, 90, 100);
-INSERT INTO pokemon (nome, tipo, hp, atk, def, spa, spd, spe) VALUES ("Moltres",
-"fire/flying", 90, 100, 90, 125, 85, 90);
+INSERT INTO pokemon (nome, tipo, hp, atk, def, spa, spd, spe, estado) VALUES ("Articuno",
+"ice/flying", 90, 85, 100, 95, 125, 85, 0);
+INSERT INTO pokemon (nome, tipo, hp, atk, def, spa, spd, spe, estado) VALUES ("Zapdos",
+"eletric/flying", 90, 90, 85, 125, 90, 100, 0);
+INSERT INTO pokemon (nome, tipo, hp, atk, def, spa, spd, spe, estado) VALUES ("Moltres",
+"fire/flying", 90, 100, 90, 125, 85, 90, 0);
 
 
 INSERT INTO pokemon (nome, tipo, hp, atk, def, spa, spd, spe, estado) VALUES ("Dratini",
@@ -445,12 +445,12 @@ INSERT INTO pokemon (nome, tipo, hp, atk, def, spa, spd, spe, estado) VALUES ("D
 "dargon/flying", 91, 134, 95, 100, 100, 80, 3);
 
 
-INSERT INTO pokemon (nome, tipo, hp, atk, def, spa, spd, spe) VALUES ("Mewtwo",
-"psychic", 106, 110, 90, 154, 90, 130);
+INSERT INTO pokemon (nome, tipo, hp, atk, def, spa, spd, spe, estado) VALUES ("Mewtwo",
+"psychic", 106, 110, 90, 154, 90, 130, 0);
 
 
-INSERT INTO pokemon (nome, tipo, hp, atk, def, spa, spd, spe) VALUES ("Mew",
-"psychic", 100, 100, 100, 100, 100, 100);
+INSERT INTO pokemon (nome, tipo, hp, atk, def, spa, spd, spe, estado) VALUES ("Mew",
+"psychic", 100, 100, 100, 100, 100, 100, 0);
 
 
 

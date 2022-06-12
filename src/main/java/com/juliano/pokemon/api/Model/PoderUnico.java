@@ -1,5 +1,6 @@
 package com.juliano.pokemon.api.Model;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -25,6 +26,7 @@ public class PoderUnico {
 	private Long id_pokemon_unico;
 	private Long id_wild_pokemon;
 	@NotNull
+	@Column(name="id_poder")
 	private Long id_power;
 	private int level;
 	private String some_effect; 

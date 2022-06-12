@@ -33,6 +33,6 @@ public class Pokemon {
 	private int spa;
 	private int spd;
 	private int spe;
-	private int estado;
+	private int estado = 0;
 		
 }
