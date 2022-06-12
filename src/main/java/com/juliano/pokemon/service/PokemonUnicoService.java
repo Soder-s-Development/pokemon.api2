@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.juliano.pokemon.api.Model.Personagem;
+import com.juliano.pokemon.api.Model.PoderUnico;
 import com.juliano.pokemon.api.Model.PokemonExperiencia;
 import com.juliano.pokemon.api.Model.PokemonUnico;
 import com.juliano.pokemon.repository.PersonagemRepository;
@@ -86,5 +87,37 @@ public class PokemonUnicoService {
 			return result.length;
 		}
 		return 0;
+	}
+	public Long aprenderPoderPU(PoderUnico p) {
+		PokemonUnico pku  = pkuRepository.findById(p.getId_pokemon_unico()).get();
+		if(pku.getPoder1()==null) {
+			pku.setPoder1(p.getId());
+		}else if(pku.getPoder1()!=null && pku.getPoder2()==null) {
+			pku.setPoder2(p.getId());
+		}else if(pku.getPoder1()!=null && pku.getPoder2()!=null && pku.getPoder3()==null) {
+			pku.setPoder3(p.getId());
+		}else if(pku.getPoder1()!=null && pku.getPoder2()!=null && pku.getPoder3()!=null && pku.getPoder4()==null) {
+			pku.setPoder4(p.getId());
+		}else {
+			return 0L;
+		}
+		pkuRepository.save(pku);
+		return p.getId();
+	}
+	public Long atualizarPoderPU(PoderUnico p, int qual) {
+		PokemonUnico pku  = pkuRepository.findById(p.getId_pokemon_unico()).get();
+		if(qual==1) {
+			pku.setPoder1(p.getId());
+		}else if(qual==2) {
+			pku.setPoder2(p.getId());
+		}else if(qual==3) {
+			pku.setPoder3(p.getId());
+		}else if(qual==4) {
+			pku.setPoder4(p.getId());
+		}else {
+			return 0L;
+		}
+		pkuRepository.save(pku);
+		return p.getId();
 	}
 }

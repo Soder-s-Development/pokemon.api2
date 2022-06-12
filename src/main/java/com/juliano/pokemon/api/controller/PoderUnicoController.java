@@ -18,6 +18,7 @@ import com.juliano.pokemon.api.Model.PoderUnico;
 import com.juliano.pokemon.api.Model.PokemonPoder;
 import com.juliano.pokemon.repository.PoderRepository;
 import com.juliano.pokemon.repository.PoderUnicoRepository;
+import com.juliano.pokemon.service.PokemonUnicoService;
 
 import lombok.AllArgsConstructor;
 
@@ -32,6 +33,8 @@ public class PoderUnicoController {
 	private PoderUnicoRepository pdur;
 	@Autowired
 	private PoderRepository pr;
+	@Autowired
+	private PokemonUnicoService pkus;
 	
 	@PostMapping("/{id}/{id_pkm}")
 	@ResponseStatus(HttpStatus.CREATED)
@@ -42,7 +45,9 @@ public class PoderUnicoController {
 		pu.setId_power(id);
 		pu.setLevel(1);
 		pu.setSome_effect("");
-		return pdur.save(pu);
+		var npu = pdur.save(pu);
+		pkus.aprenderPoderPU(npu);
+		return npu;
 	}
 	
 	@GetMapping("/{id1}/{id2}/{id3}/{id4}")
