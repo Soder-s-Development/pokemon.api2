@@ -33,6 +33,9 @@ public class PokemonUnico{
 	private Long id_pokemon;
 	
 	@NotNull
+	private String nome_pokemon;
+	
+	@NotNull
 	private Long personagem_id;
 	
 	
@@ -62,6 +65,8 @@ public class PokemonUnico{
 
 	private int hp_atual;
 	private int stamina;
+	private int stamina_atual;
+	private int evoluvao_estado;
 	
 	public PokemonUnico(Pokemon pkm, String apelido, Long personagemid) {
 		this.nivel = 1;
@@ -77,6 +82,9 @@ public class PokemonUnico{
 		this.novo_spe = pkm.getSpe()+(int)Math.floor(Math.random()*(10-0+1)+0);
 		this.hp_atual = pkm.getHp()*10;
 		this.stamina = pkm.getHp()+pkm.getSpe();
+		this.stamina_atual = stamina;
+		this.nome_pokemon = pkm.getNome();
+		this.evoluvao_estado = pkm.getEstado();
 		
 		if((int)Math.floor(Math.random()*(10-0+1)+0)%2 == 0) {
 			this.genero = "M";
