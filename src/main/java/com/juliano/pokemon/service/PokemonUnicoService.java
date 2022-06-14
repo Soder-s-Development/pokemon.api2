@@ -1,5 +1,6 @@
 package com.juliano.pokemon.service;
 
+import java.util.ArrayList;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,6 +41,7 @@ public class PokemonUnicoService {
 		pkuService.atualizaPoderes(pkmu.getId(), 1, 1);
 		PokemonExperiencia pkmE = new PokemonExperiencia(pkmu.getId());
 		int position = this.getPartyLength(pid) + 1;
+		System.out.println("positions size is "+position);
 		if(position < 7) {
 			Personagem p = this.setPokemonParty(pid, position, pkmu.getId());
 			System.out.println(p);
@@ -69,11 +71,20 @@ public class PokemonUnicoService {
 			return p.get();
 		}
 		String[] result = p.get().getHold_ids().split(",");
-		for(int i = 0; i<result.length; i++) {
-			if(i==position) {
-				result[i] = String.valueOf(pku_id);
+		ArrayList<String> list = new ArrayList<>();
+		for (String string : result) {
+			list.add(string);
+		}
+		list.add(String.valueOf(pku_id));
+		String fs = "";
+		for(var i = 0; i < list.size(); i++) {
+			if(i==0) {
+				fs += list.get(i);
+			}else {
+				fs += ","+list.get(i);
 			}
 		}
+		p.get().setHold_ids(fs);
 		return p.get();
 	}
 	private int getPartyLength(Long id) {
