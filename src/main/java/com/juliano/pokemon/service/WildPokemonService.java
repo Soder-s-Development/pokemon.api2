@@ -50,5 +50,11 @@ public class WildPokemonService {
 		wp.setPoder2(1L);
 		return wildpkmr.save(wp);
 	}
-	
+	public WildPokemon getWild(Long id){
+		return wildpkmr.findById(id).get();
+	}
+
+	public void salvar(WildPokemon w){
+		wildpkmr.save(w);
+	}
 }

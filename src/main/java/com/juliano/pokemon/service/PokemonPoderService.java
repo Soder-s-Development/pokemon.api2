@@ -1,5 +1,6 @@
 package com.juliano.pokemon.service;
 
+import com.juliano.pokemon.repository.PoderRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,7 +16,9 @@ import lombok.AllArgsConstructor;
 public class PokemonPoderService {
 	@Autowired
 	private PokemonUnicoRepository pkmur;
-	
+	@Autowired
+	private PoderRepository pdrr;
+
 	public PokemonUnico atualizaPoderes(long pkmuid, long idpoder, int position) {
 		PokemonUnico pkmu = pkmur.findById(pkmuid).get();
 		switch (position) {
@@ -35,7 +38,10 @@ public class PokemonPoderService {
 		
 		return pkmur.save(pkmu);
 	}
-	
+
+	public PokemonPoder getPoder(Long id){
+		return pdrr.findById(id).get();
+	}
 	
 	public int calculaDano(Pokemon pkm_atk, Pokemon pkm_def, PokemonPoder pp) {
 		int aatk = (pp.getDanobase()+pkm_atk.getAtk()+pkm_atk.getSpe())-(pkm_def.getDef()+pkm_def.getSpe());

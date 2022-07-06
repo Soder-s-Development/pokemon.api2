@@ -109,7 +109,7 @@ public class PokemonUnico{
 	
 	}
 	
-	public Boolean atacar(PokemonPoder poder, Batalha batalha) {
+	public Boolean podeAtacar(PokemonPoder poder) {
 		if(poder.getDanobase() > this.getStamina()) {
 			return false;
 		}

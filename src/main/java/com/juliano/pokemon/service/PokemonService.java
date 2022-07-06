@@ -29,7 +29,8 @@ public class PokemonService {
 				.map(ResponseEntity::ok)
 				.orElse(ResponseEntity.notFound().build());
 	}
-	public void CreateWildPokemon(Long id) {
-		
+
+	public Pokemon getPokemon(Long id){
+		return 	pokemonRepository.findById(id).get();
 	}
 }
