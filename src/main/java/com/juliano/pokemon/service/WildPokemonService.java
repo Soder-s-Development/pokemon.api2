@@ -24,6 +24,9 @@ public class WildPokemonService {
 	private WildPokemonRepository wildpkmr;
 	@Autowired
 	private PokemonRepository pkRepository;
+
+	@Autowired
+	private PokemonPoderService poderService;
 	
 	public WildPokemon genereteWildP(Long id) {
 		Pokemon p = pkRepository.findById(id).get();

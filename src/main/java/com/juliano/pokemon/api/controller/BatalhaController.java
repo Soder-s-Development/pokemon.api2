@@ -77,4 +77,30 @@ public class BatalhaController {
 		btservice.save(bt);
 		return ResponseEntity.ok(json);
 	}
+
+
+	@PostMapping("wildAttack/{id1}/{id2}/power/{idp}/{btid}")
+	public ResponseEntity wildAttack(@PathVariable Long id1, @PathVariable Long id2, @PathVariable Long idp, @PathVariable Long btid){
+		PokemonUnico p = pmus.getPokemon(id2);
+		WildPokemon w = wpms.getWild(id1);
+		PokemonPoder pp = poderService.getPoder(idp);
+		Batalha bt = btservice.getBatalha(btid);
+
+		int dano = poderService.calculaDano(pkms.getPokemon(w.getId_pokemon()), pkms.getPokemon(p.getId_pokemon()), pp);
+
+		if((p.getHp_atual()-dano)<1){
+			p.setHp_atual(0);
+			bt.setVida_p1(0);
+			pmus.salvar(p);
+			btservice.save(bt);
+			var json = "{dano:"+dano+",hp_pokemon: 0}";
+			return ResponseEntity.ok(json);
+		}
+		bt.setVida_p1(p.getHp_atual()-dano);
+		p.setHp_atual(p.getHp_atual()-dano);
+		var json = "{dano:"+dano+",hp_pokemon: "+w.getHp_atual()+"}";
+		pmus.salvar(p);
+		btservice.save(bt);
+		return ResponseEntity.ok(json);
+	}
 }
