@@ -94,19 +94,44 @@ public class PokemonUnico{
 		
 		System.out.println("pokemon capturado! Apelido -> "+this.apelido);
 	}
-	public void evoluir(PokemonUnico pkmunico, Pokemon pkm, String novoApelido){
-		this.apelido = novoApelido;
+	public void evoluir(PokemonUnico pkmunico, Pokemon pkm){
 		this.tipo = pkm.getTipo();
-		
-		this.novo_hp = pkm.getHp()+(pkm.getHp()-pkmunico.getNovo_hp());
-		this.novo_atk = pkm.getAtk()+(int)Math.floor(Math.random()*(10-0+1)+0);
-		this.novo_def = pkm.getDef()+(int)Math.floor(Math.random()*(10-0+1)+0);
-		this.novo_spa = pkm.getSpa()+(int)Math.floor(Math.random()*(10-0+1)+0);
-		this.novo_spd = pkm.getSpd()+(int)Math.floor(Math.random()*(10-0+1)+0);
-		this.novo_spe = pkm.getSpe()+(int)Math.floor(Math.random()*(10-0+1)+0);
-		
-		System.out.println("pokemon evoluído! Apelido -> "+this.apelido);
-	
+		this.id_pokemon = pkm.getId();
+		this.nome_pokemon = pkm.getNome();
+
+		if(this.novo_hp-pkm.getHp()>0){
+			this.novo_hp = (this.novo_hp-pkm.getHp())+pkm.getHp()+(pkm.getHp()-pkmunico.getNovo_hp());
+		}else {
+			this.novo_hp = pkm.getHp()+(pkm.getHp()-pkmunico.getNovo_hp());
+		}
+		if(this.novo_atk-pkm.getAtk()>0){
+			this.novo_atk = (this.novo_atk-pkm.getAtk())+pkm.getAtk()+(int)Math.floor(Math.random()*(10-0+1)+0);
+		}else{
+			this.novo_atk = pkm.getAtk()+(int)Math.floor(Math.random()*(10-0+1)+0);
+		}
+		if(this.novo_def-pkm.getDef()>0){
+			this.novo_def = (this.novo_def-pkm.getDef())+pkm.getDef()+(int)Math.floor(Math.random()*(10-0+1)+0);
+		}else{
+			this.novo_def = pkm.getDef()+(int)Math.floor(Math.random()*(10-0+1)+0);
+		}
+		if(this.novo_spa-pkm.getSpa()>0){
+			this.novo_spa = (this.novo_spa-pkm.getSpa())+pkm.getSpa()+(int)Math.floor(Math.random()*(10-0+1)+0);
+		}else{
+			this.novo_spa = pkm.getSpa()+(int)Math.floor(Math.random()*(10-0+1)+0);
+		}
+		if(this.novo_spd-pkm.getSpd()>0){
+			this.novo_spd = (this.novo_spd-pkm.getSpd())+pkm.getSpd()+(int)Math.floor(Math.random()*(10-0+1)+0);
+		}else{
+			this.novo_spd = pkm.getSpd()+(int)Math.floor(Math.random()*(10-0+1)+0);
+		}
+		if(this.novo_spe-pkm.getSpe()>0){
+			this.novo_spe = (this.novo_spe-pkm.getSpe())+pkm.getSpe()+(int)Math.floor(Math.random()*(10-0+1)+0);
+		}else{
+			this.novo_spe = pkm.getSpe()+(int)Math.floor(Math.random()*(10-0+1)+0);
+		}
+
+		this.evoluvao_estado++;
+		System.out.println("pokemon evoluído para op estágio"+this.evoluvao_estado +"! Nome -> "+this.getNome_pokemon());
 	}
 	
 	public Boolean podeAtacar(PokemonPoder poder) {

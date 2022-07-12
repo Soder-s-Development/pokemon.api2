@@ -25,6 +25,9 @@ public class BatalhaService {
 		return br.save(bt);
 	}
 
+	public boolean teste(){
+		return true;
+	}
 	public Batalha batalharContraPokeSelvagem(Long idConta, PokemonUnico p, WildPokemon w){
 		Batalha bt = new Batalha();
 		bt.setId_conta1(idConta);

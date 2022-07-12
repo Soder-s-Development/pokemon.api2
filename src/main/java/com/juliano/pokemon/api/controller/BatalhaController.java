@@ -29,7 +29,7 @@ public class BatalhaController {
 	private PokemonUnicoService pmus;
 	@Autowired
 	private PoderUnicoRepository pdrur;
-
+	@Autowired
 	private PokemonPoderService poderService;
 
 	@PostMapping("/{id1}/{id2}")
@@ -40,11 +40,12 @@ public class BatalhaController {
 		}
 		return false;
 	}
+
 	@GetMapping("foundPokemon")
 	public ResponseEntity<WildPokemon> foundAPokemon() {
 		Random rand = new Random(); 
-	      Long upperbound = (long) 150;
-	      Long int_random = rand.nextLong(upperbound);
+	      Long upperbound = 150L;
+	      Long int_random = rand.nextLong();
 		return  ResponseEntity.ok(wpms.genereteWildP(int_random));
 	}
 
