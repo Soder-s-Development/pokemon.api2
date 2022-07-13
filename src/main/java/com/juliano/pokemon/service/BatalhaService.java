@@ -28,6 +28,8 @@ public class BatalhaService {
 	public boolean teste(){
 		return true;
 	}
+
+	//batalha
 	public Batalha batalharContraPokeSelvagem(Long idConta, PokemonUnico p, WildPokemon w){
 		Batalha bt = new Batalha();
 		bt.setId_conta1(idConta);

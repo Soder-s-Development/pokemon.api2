@@ -10,8 +10,11 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.rules.ErrorCollector;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.stubbing.Answer;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
+
+import java.util.Optional;
 
 import static org.hamcrest.core.Is.is;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -46,4 +49,11 @@ class ApplicationTests {
 	public void teste(){
 		assertEquals(true, this.bt.teste());
 	}
+
+	@Test
+	public void shouldGetBatalha(){
+		when(br.findById(1L)).thenReturn(Optional.ofNullable(BatalhaBuilder.umaBatalha().agora()));
+		assertEquals(1L, this.bt.getBatalha(1L).getId_conta1());
+	}
+
 }

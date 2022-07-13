@@ -5,7 +5,6 @@ import java.util.Random;
 
 import com.juliano.pokemon.api.Model.*;
 import com.juliano.pokemon.repository.PoderUnicoRepository;
-import com.juliano.pokemon.repository.PokemonUnicoRepository;
 import com.juliano.pokemon.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -43,10 +42,9 @@ public class BatalhaController {
 
 	@GetMapping("foundPokemon")
 	public ResponseEntity<WildPokemon> foundAPokemon() {
-		Random rand = new Random(); 
-	      Long upperbound = 150L;
-	      Long int_random = rand.nextLong();
-		return  ResponseEntity.ok(wpms.genereteWildP(int_random));
+		Random rand = new Random();
+		int int_random = rand.nextInt(150);
+		return  ResponseEntity.ok(wpms.genereteWildP((long)int_random));
 	}
 
 	@PostMapping("attack/{id1}/wild/{id2}/power/{idPU}/{btid}")
