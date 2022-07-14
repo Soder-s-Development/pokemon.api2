@@ -1,6 +1,6 @@
-create table AccountValidation(
+create table accountValidation(
     id bigint not null auto_increment primary key,
     acc_id bigint not null,
     email varchar(50) not null,
-    int bigint not null
+    code int not null
 )
