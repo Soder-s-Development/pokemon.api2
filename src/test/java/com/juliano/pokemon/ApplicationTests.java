@@ -16,6 +16,7 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import java.util.Optional;
 
+import static com.juliano.pokemon.builder.BatalhaBuilder.*;
 import static org.hamcrest.core.Is.is;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -39,7 +40,7 @@ class ApplicationTests {
 
 	@Test
 	public void deveIniciarBatalha(){
-		when(br.save(new Batalha())).thenReturn(BatalhaBuilder.umaBatalha().agora());
+		when(br.save(new Batalha())).thenReturn(umaBatalha().agora());
 		Batalha b = this.bt.iniciarBatalha(1L, 2L);
 		//b.setId_conta1(1L);
 		assertEquals(1L, b.getId_conta1());
@@ -52,7 +53,7 @@ class ApplicationTests {
 
 	@Test
 	public void shouldGetBatalha(){
-		when(br.findById(1L)).thenReturn(Optional.ofNullable(BatalhaBuilder.umaBatalha().agora()));
+		when(br.findById(1L)).thenReturn(Optional.ofNullable(umaBatalha().agora()));
 		assertEquals(1L, this.bt.getBatalha(1L).getId_conta1());
 	}
 
