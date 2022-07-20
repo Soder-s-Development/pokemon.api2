@@ -46,11 +46,23 @@ public class PokemonUnicoService {
 			Personagem p = this.setPokemonParty(pid, position, pkmu.getId());
 			System.out.println(p);
 			perr.save(p);
+		}else{
+			extracted(id, pkmu);
 		}
 		pmkER.save(pkmE);
 		return pkmu;
 	}
-	
+
+	private void extracted(Long id, PokemonUnico pkmu) {
+		Optional<Personagem> p = perr.findById(id);
+		System.out.println(p.isEmpty());
+		if(p.isEmpty()) {
+			new Exception("Invalid player");
+		}
+		p.get().setPkmu_ids(p.get().getPkmu_ids() + "," + String.valueOf(pkmu.getId()));
+		perr.save(p.get());
+	}
+
 	private Boolean findPersonagem(Long id) {
 		Optional<Personagem> p = perr.findById(id);
 		System.out.println(p.isEmpty());
@@ -68,6 +80,7 @@ public class PokemonUnicoService {
 		}
 		if(p.get().getHold_ids().isBlank() || p.get().getHold_ids().isEmpty()) {
 			p.get().setHold_ids(String.valueOf(pku_id));
+			p.get().setPkmu_ids(String.valueOf(pku_id));
 			return p.get();
 		}
 		String[] result = p.get().getHold_ids().split(",");
@@ -85,6 +98,7 @@ public class PokemonUnicoService {
 			}
 		}
 		p.get().setHold_ids(fs);
+		p.get().setPkmu_ids(p.get().getPkmu_ids() + "," + String.valueOf(pku_id));
 		return p.get();
 	}
 	private int getPartyLength(Long id) {
