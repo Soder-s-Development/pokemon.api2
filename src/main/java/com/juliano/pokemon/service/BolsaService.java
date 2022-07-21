@@ -4,11 +4,13 @@ import javax.validation.Valid;
 
 import org.apache.tomcat.util.json.JSONParser;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestBody;
 
 import com.juliano.pokemon.api.Model.Bolsa;
 import com.juliano.pokemon.repository.BolsaRepository;
+import org.springframework.web.bind.annotation.ResponseStatus;
 
 @Service
 public class BolsaService {
@@ -75,7 +77,8 @@ public class BolsaService {
 		b.setItens(newArrayOfObjects);
 		return blsr.save(b);
 	}
-	public Bolsa getBolsa(Long id) {
-		return this.blsr.findById(id).get();
+	public ResponseEntity<Bolsa> getBolsa(Long id) {
+		return this.blsr.findById(id).map(ResponseEntity::ok)
+				.orElse(ResponseEntity.notFound().build());
 	}
 }
