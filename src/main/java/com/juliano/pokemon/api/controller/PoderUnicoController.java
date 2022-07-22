@@ -6,6 +6,7 @@ import java.util.HashMap;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -15,7 +16,6 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.juliano.pokemon.api.Model.PoderUnico;
-import com.juliano.pokemon.api.Model.PokemonPoder;
 import com.juliano.pokemon.repository.PoderRepository;
 import com.juliano.pokemon.repository.PoderUnicoRepository;
 import com.juliano.pokemon.service.PokemonUnicoService;
@@ -51,66 +51,42 @@ public class PoderUnicoController {
 	}
 	
 	@GetMapping("/{id1}/{id2}/{id3}/{id4}")
-	public ArrayList<Object> getMeusPoderes(@PathVariable Long id1, @PathVariable Long id2, @PathVariable Long id3, @PathVariable Long id4) {
-		var poderes = new ArrayList<>();
-		System.out.println("Montando lista");
-		if(id1>0) {
-			var poder = new HashMap<>();
-			var ob = pdur.findById(id1).get();
-			PokemonPoder pd;
-			pd = pr.findById(ob.getId_power()).get();
-			poder.put("nome", pd.getNome());
-			poder.put("tipo", pd.getTipo());
-			poder.put("efeito", pd.getEfeito());
-			poder.put("descricao", pd.getDescricao());
-			poder.put("dano", pd.getDanobase());
-			poder.put("buff_pu", ob.getSome_effect());
-			
-			poderes.add(poder);
+	public ResponseEntity<HashMap> getMeusPoderes(@PathVariable Long id1, @PathVariable Long id2, @PathVariable Long id3, @PathVariable Long id4) {
+		HashMap<String, Object> map = new HashMap<>();
+		System.out.println("Montando map");
+		if(id1 == 0){
+			ResponseEntity.notFound().build();
 		}
-		if(id2>0) {
-			var poder = new HashMap<>();
-			var ob = pdur.findById(id2).get();
-			PokemonPoder pd;
-			pd = pr.findById(ob.getId_power()).get();
-			poder.put("nome", pd.getNome());
-			poder.put("tipo", pd.getTipo());
-			poder.put("efeito", pd.getEfeito());
-			poder.put("descricao", pd.getDescricao());
-			poder.put("dano", pd.getDanobase());
-			poder.put("buff_pu", ob.getSome_effect());
-			
-			poderes.add(poder);
+		PoderUnico pdu = pdur.findById(id1).get();
+		if (pdu.getId() > 0) {
+			map.put("poderUnico1", pdu);
+			map.put("poder1", pr.findById(pdu.getId_power()));
+			pdu = null;
 		}
-		if(id3>0) {
-			var poder = new HashMap<>();
-			var ob = pdur.findById(id3).get();
-			PokemonPoder pd;
-			pd = pr.findById(ob.getId_power()).get();
-			poder.put("nome", pd.getNome());
-			poder.put("tipo", pd.getTipo());
-			poder.put("efeito", pd.getEfeito());
-			poder.put("descricao", pd.getDescricao());
-			poder.put("dano", pd.getDanobase());
-			poder.put("buff_pu", ob.getSome_effect());
-			
-			poderes.add(poder);
+		if(id2 > 0){
+			pdu = pdur.findById(id2).get();
 		}
-		if(id4>0) {
-			var poder = new HashMap<>();
-			var ob = pdur.findById(id4).get();
-			PokemonPoder pd;
-			pd = pr.findById(ob.getId_power()).get();
-			poder.put("nome", pd.getNome());
-			poder.put("tipo", pd.getTipo());
-			poder.put("efeito", pd.getEfeito());
-			poder.put("descricao", pd.getDescricao());
-			poder.put("dano", pd.getDanobase());
-			poder.put("buff_pu", ob.getSome_effect());
-			
-			poderes.add(poder);
+		if (pdu != null) {
+			map.put("poderUnico2", pdu);
+			map.put("poder2", pr.findById(pdu.getId_power()));
+			pdu = null;
 		}
-		
-		return poderes;
+		if(id3 > 0){
+			pdu = pdur.findById(id3).get();
+		}
+		if (pdu != null) {
+			map.put("poderUnico3", pdu);
+			map.put("poder3", pr.findById(pdu.getId_power()));
+			pdu = null;
+		}
+		if(id4 > 0){
+			pdu = pdur.findById(id4).get();
+		}
+		if (pdu != null) {
+			map.put("poderUnico4", pdu);
+			map.put("poder4", pr.findById(pdu.getId_power()));
+			pdu = null;
+		}
+		return ResponseEntity.status(200).body(map);
 	}
 }
