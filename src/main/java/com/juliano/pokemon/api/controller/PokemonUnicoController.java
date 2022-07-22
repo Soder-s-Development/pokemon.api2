@@ -1,6 +1,7 @@
 package com.juliano.pokemon.api.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -27,9 +28,8 @@ public class PokemonUnicoController {
 	private PokemonExperienciaRepository pmer;
 	
 	@GetMapping("/{id}")
-	public PokemonUnico getPoke(@PathVariable Long id) {
-		PokemonUnico pkmu = pkmur.findById(id).get();
-		return pkmu;
+	public ResponseEntity<PokemonUnico> getPoke(@PathVariable Long id) {
+		return pkmur.findById(id).map(ResponseEntity::ok).orElse(ResponseEntity.notFound().build());
 	}
 	@DeleteMapping("/{id}")
 	public boolean delete(@PathVariable Long id) {
