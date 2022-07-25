@@ -40,16 +40,22 @@ public class PoderUnicoController {
 	@ResponseStatus(HttpStatus.CREATED)
 	public Object aprendePoder(@PathVariable Long id, @PathVariable Long id_pkm) {
 		System.out.println("Aprendendo poder");
+		PoderUnico pu = getPoderUnico(id, id_pkm);
+		var npu = pdur.save(pu);
+		//aprendePoder(id_pkm, npu.getId());
+		pkus.aprenderPoderPU(npu);
+		return npu;
+	}
+
+	private PoderUnico getPoderUnico(Long id, Long id_pkm) {
 		PoderUnico pu = new PoderUnico();
 		pu.setId_pokemon_unico(id_pkm);
 		pu.setId_power(id);
 		pu.setLevel(1);
 		pu.setSome_effect("");
-		var npu = pdur.save(pu);
-		pkus.aprenderPoderPU(npu);
-		return npu;
+		return pu;
 	}
-	
+
 	@GetMapping("/{id1}/{id2}/{id3}/{id4}")
 	public ResponseEntity<HashMap> getMeusPoderes(@PathVariable Long id1, @PathVariable Long id2, @PathVariable Long id3, @PathVariable Long id4) {
 		HashMap<String, Object> map = new HashMap<>();

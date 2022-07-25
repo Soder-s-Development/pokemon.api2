@@ -11,6 +11,8 @@ import com.juliano.pokemon.repository.PokemonUnicoRepository;
 
 import lombok.AllArgsConstructor;
 
+import java.util.Optional;
+
 @Service
 @AllArgsConstructor
 public class PokemonPoderService {
@@ -19,6 +21,48 @@ public class PokemonPoderService {
 	@Autowired
 	private PoderRepository pdrr;
 
+	public PokemonUnico aprendePoder(long pkuid, long pdu){
+		Optional<PokemonUnico> pkmu = pkmur.findById(pkuid);
+		if(pkmu.isEmpty() == true)
+			new Exception("Pokemon não encontrado");
+		int posicao = this.posicaoDisponivel(pkmu.get());
+		if(posicao < 0){
+			new Exception("Todas as posições estão preenchidas");
+		}
+		switch (posicao){
+			case 1:
+				pkmu.get().setPoder1(pdu);
+				break;
+			case 2:
+				pkmu.get().setPoder2(pdu);
+				break;
+			case 3:
+				pkmu.get().setPoder3(pdu);
+				break;
+			case 4:
+				pkmu.get().setPoder4(pdu);
+				break;
+		}
+		return pkmur.save(pkmu.get());
+	}
+	public int posicaoDisponivel(PokemonUnico pk){
+		boolean[] arr = {false, false, false, false};
+		if(pk.getPoder1() > 0){
+			arr[0] = true;
+		}  if (pk.getPoder2() > 0) {
+			arr[1] = true;
+		}  if (pk.getPoder3() > 0) {
+			arr[2] = true;
+		} if (pk.getPoder4() > 0) {
+			arr[3] = true;
+		}
+		for(var i = 0; i < arr.length; i++){
+			if (arr[i] == false){
+				return i+1;
+			}
+		}
+		return -1;
+	}
 	public PokemonUnico atualizaPoderes(long pkmuid, long idpoder, int position) {
 		PokemonUnico pkmu = pkmur.findById(pkmuid).get();
 		switch (position) {
