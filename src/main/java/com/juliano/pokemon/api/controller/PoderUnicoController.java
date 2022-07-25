@@ -53,11 +53,17 @@ public class PoderUnicoController {
 	@GetMapping("/{id1}/{id2}/{id3}/{id4}")
 	public ResponseEntity<HashMap> getMeusPoderes(@PathVariable Long id1, @PathVariable Long id2, @PathVariable Long id3, @PathVariable Long id4) {
 		HashMap<String, Object> map = new HashMap<>();
+		PoderUnico pdu = null;
 		System.out.println("Montando map");
 		if(id1 == 0){
-			ResponseEntity.notFound().build();
+			return ResponseEntity.notFound().build();
 		}
-		PoderUnico pdu = pdur.findById(id1).get();
+		var pduO = pdur.findById(id1);
+		if(pduO.isEmpty()){
+			return ResponseEntity.notFound().build();
+		}else{
+			pdu = pduO.get();
+		}
 		if (pdu.getId() > 0) {
 			map.put("poderUnico1", pdu);
 			map.put("poder1", pr.findById(pdu.getId_power()));
