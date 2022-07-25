@@ -33,4 +33,7 @@ public class PokemonService {
 	public Pokemon getPokemon(Long id){
 		return 	pokemonRepository.findById(id).get();
 	}
+	public int getEstado(long id){
+		pokemonRepository.findById(id).map()
+	}
 }

@@ -60,6 +60,12 @@ public class Pokemoncontroller {
 	public PokemonUnico capturar(@PathVariable Long id, @PathVariable String apelido, @PathVariable Long personagem_id) {
 		return (PokemonUnico) puservice.capturar(id, apelido, personagem_id);
 	}
+
+	@GetMapping("/estado/{id}")
+	public int getEvolucao(@PathVariable id){
+
+		return 0;
+	}
 			
 //	@GetMapping("/unico/{id}")
 //	public PokemonUnico getPoke(@PathVariable Long id) {
