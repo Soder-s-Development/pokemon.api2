@@ -3,13 +3,10 @@ package com.juliano.pokemon.service;
 import java.util.ArrayList;
 import java.util.Optional;
 
+import com.juliano.pokemon.api.Model.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.juliano.pokemon.api.Model.Personagem;
-import com.juliano.pokemon.api.Model.PoderUnico;
-import com.juliano.pokemon.api.Model.PokemonExperiencia;
-import com.juliano.pokemon.api.Model.PokemonUnico;
 import com.juliano.pokemon.repository.PersonagemRepository;
 import com.juliano.pokemon.repository.PoderRepository;
 import com.juliano.pokemon.repository.PokemonExperienciaRepository;
@@ -33,11 +30,11 @@ public class PokemonUnicoService {
 	@Autowired
 	private PokemonPoderService pkuService;
 	
-	public Object capturar(Long id, String apelido, Long pid) {
+	public Object capturar(Long id, String apelido, Long pid, String g) {
 		if(this.findPersonagem(pid)==false) {
 			return null;
 		}
-		PokemonUnico pkmu = pkuRepository.save(new PokemonUnico(pkRepository.getById(id), apelido, pid));
+		PokemonUnico pkmu = pkuRepository.save(new PokemonUnico(pkRepository.getById(id), apelido, pid, g));
 		pkuService.atualizaPoderes(pkmu.getId(), 1, 1);
 		PokemonExperiencia pkmE = new PokemonExperiencia(pkmu.getId());
 		int position = this.getPartyLength(pid) + 1;
@@ -47,7 +44,7 @@ public class PokemonUnicoService {
 			System.out.println(p);
 			perr.save(p);
 		}else{
-			extracted(id, pkmu);
+			extracted(pid, pkmu);
 		}
 		pmkER.save(pkmE);
 		return pkmu;
@@ -55,12 +52,10 @@ public class PokemonUnicoService {
 
 	private void extracted(Long id, PokemonUnico pkmu) {
 		Optional<Personagem> p = perr.findById(id);
-		System.out.println(p.isEmpty());
-		if(p.isEmpty()) {
-			new Exception("Invalid player");
-		}
-		p.get().setPkmu_ids(p.get().getPkmu_ids() + "," + String.valueOf(pkmu.getId()));
-		perr.save(p.get());
+		if ( !p.isEmpty() ) {
+			p.get().setPkmu_ids(p.get().getPkmu_ids() + "," + String.valueOf(pkmu.getId()));
+			perr.save(p.get());
+		} else new Exception("Invalid player");
 	}
 
 	private Boolean findPersonagem(Long id) {

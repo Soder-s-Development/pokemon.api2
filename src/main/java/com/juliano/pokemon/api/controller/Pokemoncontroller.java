@@ -56,15 +56,15 @@ public class Pokemoncontroller {
 		return pservice.retornarPk(pokemonId);
 	}
 	
-	@PostMapping("/capturar/{id}/{apelido}/{personagem_id}")
-	public PokemonUnico capturar(@PathVariable Long id, @PathVariable String apelido, @PathVariable Long personagem_id) {
-		return (PokemonUnico) puservice.capturar(id, apelido, personagem_id);
+	@PostMapping("/capturar/{id}/{apelido}/{personagem_id}/{genero}")
+	public PokemonUnico capturar(@PathVariable String genero, @PathVariable Long id, @PathVariable String apelido, @PathVariable Long personagem_id) {
+		return (PokemonUnico) puservice.capturar(id, apelido, personagem_id, genero);
 	}
 
 	@GetMapping("/estado/{id}")
-	public int getEvolucao(@PathVariable id){
-
-		return 0;
+	public int getEvolucao(@PathVariable Long id){
+		Integer i = pservice.getEstado(id);
+		return i <= 0 ? 0 : i;
 	}
 			
 //	@GetMapping("/unico/{id}")

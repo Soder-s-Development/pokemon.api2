@@ -1,6 +1,7 @@
 package com.juliano.pokemon.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -34,6 +35,8 @@ public class PokemonService {
 		return 	pokemonRepository.findById(id).get();
 	}
 	public int getEstado(long id){
-		pokemonRepository.findById(id).map()
+		Optional<Pokemon> byId = pokemonRepository.findById(id);
+		if(!byId.isPresent()) return -1;
+		return byId.get().getEstado();
 	}
 }

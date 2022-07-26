@@ -13,6 +13,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.Objects;
+
 @Getter
 @Setter
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
@@ -68,7 +70,7 @@ public class PokemonUnico{
 	private int stamina_atual;
 	private int evoluvao_estado;
 	
-	public PokemonUnico(Pokemon pkm, String apelido, Long personagemid) {
+	public PokemonUnico(Pokemon pkm, String apelido, Long personagemid, String genero) {
 		this.nivel = 1;
 		this.apelido = apelido;
 		this.personagem_id = personagemid;
@@ -85,14 +87,10 @@ public class PokemonUnico{
 		this.stamina_atual = stamina;
 		this.nome_pokemon = pkm.getNome();
 		this.evoluvao_estado = pkm.getEstado();
-		
-		if((int)Math.floor(Math.random()*(10-0+1)+0)%2 == 0) {
-			this.genero = "M";
-		}else {
-			this.genero = "F";
-		}
-		
-		System.out.println("pokemon capturado! Apelido -> "+this.apelido);
+
+		this.genero = Objects.requireNonNullElseGet(genero, () -> (int) Math.floor(Math.random() * (10 - 0 + 1) + 0) % 2 == 0 ? "M" : "F");
+
+		System.out.println("pokemon capturado! Genero -> "+this.genero);
 	}
 	public void evoluir(PokemonUnico pkmunico, Pokemon pkm){
 		this.tipo = pkm.getTipo();
