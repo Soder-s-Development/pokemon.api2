@@ -36,9 +36,9 @@ public class WildPokemonService {
 	    int int_random = rand.nextInt(upperbound);
 		wp.setNome(p.getNome());
 		if(int_random%2==0) {
-			wp.setGenero("masculino");
+			wp.setGenero("M");
 		}else {
-			wp.setGenero("femenino");
+			wp.setGenero("F");
 		}
 		wp.setId_pokemon(id);
 		wp.setNivel(1);
