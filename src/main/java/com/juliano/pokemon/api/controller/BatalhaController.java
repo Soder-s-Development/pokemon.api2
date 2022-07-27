@@ -40,11 +40,11 @@ public class BatalhaController {
 		return false;
 	}
 
-	@GetMapping("foundPokemon")
-	public ResponseEntity<WildPokemon> foundAPokemon() {
+	@GetMapping("foundPokemon/{level}")
+	public ResponseEntity<WildPokemon> foundAPokemon(@PathVariable int level) {
 		Random rand = new Random();
 		int int_random = rand.nextInt(150);
-		return  ResponseEntity.ok(wpms.genereteWildP((long)int_random));
+		return  ResponseEntity.ok(wpms.genereteWildP((long)int_random, level));
 	}
 
 	@PostMapping("attack/{id1}/wild/{id2}/power/{idPU}/{btid}")
