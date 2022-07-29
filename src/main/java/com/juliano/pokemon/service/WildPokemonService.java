@@ -49,6 +49,7 @@ public class WildPokemonService {
 		wp.setNovo_spd(p.getSpd()+int_random+wp.getNivel());
 		wp.setNovo_spe(p.getSpe()+int_random+wp.getNivel());
 		wp.setTipo(p.getTipo()+int_random+wp.getNivel());
+		wp.setHp_atual(wp.getNovo_hp());
 		wp.setPoder1(0L);
 		wp.setPoder2(1L);
 		return wildpkmr.save(wp);
