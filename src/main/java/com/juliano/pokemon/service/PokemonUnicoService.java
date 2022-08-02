@@ -140,8 +140,8 @@ public class PokemonUnicoService {
 		pkuRepository.save(pku);
 		return p.getId();
 	}
-	public PokemonUnico getPokemon(Long id){
-		return pkuRepository.findById(id).get();
+	public Optional<PokemonUnico> getPokemon(Long id){
+		return pkuRepository.findById(id);
 	}
 
 	public void salvar(PokemonUnico p){

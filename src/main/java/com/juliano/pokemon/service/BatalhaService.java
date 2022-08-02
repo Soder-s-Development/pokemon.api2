@@ -10,6 +10,8 @@ import com.juliano.pokemon.repository.BatalhaRepository;
 
 import lombok.AllArgsConstructor;
 
+import java.util.Optional;
+
 @Service
 @AllArgsConstructor
 public class BatalhaService {
@@ -41,8 +43,8 @@ public class BatalhaService {
 		return  br.save(bt);
 	}
 
-	public Batalha getBatalha(Long id){
-		return br.findById(id).get();
+	public Optional<Batalha> getBatalha(Long id){
+		return br.findById(id);
 	}
 	public void save(Batalha bt){
 		br.save(bt);
