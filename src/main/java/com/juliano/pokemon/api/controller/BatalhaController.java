@@ -61,9 +61,11 @@ public class BatalhaController {
 		PokemonPoder pp = poderService.getPoder(pu.getId_power());
 		Batalha bt = btservice.getBatalha(btid).isPresent() ? btservice.getBatalha(btid).get() : null;
 		if(bt == null) return ResponseEntity.ok("There is no battle running");
-		if (!p.isPresent() || !p.get().podeAtacar(pp))
+		if (!p.isPresent() || !p.get().podeAtacar(pp)){
+			p.get().setStamina_atual(p.get().getStamina_atual()+1);
+			pmus.salvar(p.get());
 			return ResponseEntity.ok("Can't attack");
-
+		}
 		int dano = poderService.calculaDano(pkms.getPokemon(p.get().getId_pokemon()), pkms.getPokemon(w.getId_pokemon()), pp);
 		dano = dano+(pu.getLevel()*30);
 
@@ -72,14 +74,16 @@ public class BatalhaController {
 			bt.setVida_p7(0);
 			wpms.salvar(w);
 			btservice.save(bt);
-			var json = "{dano:"+dano+",hp_inimigo: 0}";
+			var json = "dano:"+dano+",hp_inimigo: 0";
 			return ResponseEntity.ok(json);
 		}
 		bt.setVida_p7(w.getHp_atual()-dano);
 		w.setHp_atual(w.getHp_atual()-dano);
-		var json = "dano:"+dano+",hp_inimigo: "+w.getHp_atual();
+		p.get().setStamina_atual(p.get().getStamina_atual()+1);
+		var json = "dano:"+dano+",hp_inimigo: "+w.getHp_atual()+",stamina_atual:"+p.get().getStamina_atual();
 		wpms.salvar(w);
 		btservice.save(bt);
+		pmus.salvar(p.get());
 		return ResponseEntity.ok(json);
 	}
 
@@ -117,6 +121,7 @@ public class BatalhaController {
 		var json = "{dano:"+dano+",hp_pokemon: "+w.getHp_atual()+"}";
 		pmus.salvar(p);
 		btservice.save(bt);
+		pmus.salvar(p);
 		return ResponseEntity.ok(json);
 	}
 }

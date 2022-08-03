@@ -133,10 +133,10 @@ public class PokemonUnico{
 	}
 	
 	public Boolean podeAtacar(PokemonPoder poder) {
-		if(poder.getDanobase() > this.getStamina()) {
+		if(poder.getDanobase() > this.getStamina_atual()) {
 			return false;
 		}
-		this.setStamina(this.getStamina()-poder.getDanobase());
+		this.setStamina_atual((this.getStamina_atual()-poder.getDanobase()));
 		return true;
 	}
 }
