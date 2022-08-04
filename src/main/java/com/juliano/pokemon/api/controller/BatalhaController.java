@@ -113,12 +113,12 @@ public class BatalhaController {
 			bt.setVida_p1(0);
 			pmus.salvar(p);
 			btservice.save(bt);
-			var json = "{dano:"+dano+",hp_pokemon: 0}";
+			var json = "dano:"+dano+",hp_pokemon: 0";
 			return ResponseEntity.ok(json);
 		}
 		bt.setVida_p1(p.getHp_atual()-dano);
 		p.setHp_atual(p.getHp_atual()-dano);
-		var json = "{dano:"+dano+",hp_pokemon: "+w.getHp_atual()+"}";
+		var json = "dano:"+dano+",hp_pokemon: "+w.getHp_atual();
 		pmus.salvar(p);
 		btservice.save(bt);
 		pmus.salvar(p);
