@@ -54,7 +54,7 @@ class ApplicationTests {
 	@Test
 	public void shouldGetBatalha(){
 		when(br.findById(1L)).thenReturn(Optional.ofNullable(umaBatalha().agora()));
-		assertEquals(1L, this.bt.getBatalha(1L).getId_conta1());
+		assertEquals(1L, this.bt.getBatalha(1L).get().getId_conta1());
 	}
 
 }
