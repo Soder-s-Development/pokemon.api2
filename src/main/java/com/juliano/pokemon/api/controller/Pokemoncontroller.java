@@ -28,8 +28,7 @@ import lombok.AllArgsConstructor;
 @RestController
 @RequestMapping("/pokemons")
 @AllArgsConstructor
-//@CrossOrigin(origins = {"http://167.249.95.158" ,"https://pokemonworld.s3.amazonaws.com/", "https://soder-pokedex.netlify.app", "http://localhost", "http://127.0.0.1", "http://0.0.0.0", "x-requested-with", "content-type"}, originPatterns = "*", methods = {RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT, RequestMethod.DELETE, RequestMethod.PATCH})
-@CrossOrigin(origins = {"*", "x-requested-with", "content-type"}, originPatterns = "*", methods = {RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT, RequestMethod.DELETE, RequestMethod.PATCH})
+@CrossOrigin(origins = "*", originPatterns = "*", methods = {RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT, RequestMethod.DELETE, RequestMethod.PATCH})
 public class Pokemoncontroller {
 	
 //
