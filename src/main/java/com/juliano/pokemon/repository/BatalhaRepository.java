@@ -7,5 +7,4 @@ import com.juliano.pokemon.api.Model.Batalha;
 
 @Repository
 public interface BatalhaRepository extends JpaRepository<Batalha, Long>{
-
 }

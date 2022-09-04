@@ -1,20 +1,14 @@
 package com.juliano.pokemon.service;
 
-import java.util.Random;
-
+import com.juliano.pokemon.api.Model.Pokemon;
+import com.juliano.pokemon.api.Model.WildPokemon;
+import com.juliano.pokemon.repository.PokemonRepository;
+import com.juliano.pokemon.repository.WildPokemonRepository;
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.juliano.pokemon.api.Model.Pokemon;
-import com.juliano.pokemon.api.Model.WildPokemon;
-import com.juliano.pokemon.repository.PersonagemRepository;
-import com.juliano.pokemon.repository.PoderRepository;
-import com.juliano.pokemon.repository.PokemonExperienciaRepository;
-import com.juliano.pokemon.repository.PokemonRepository;
-import com.juliano.pokemon.repository.PokemonUnicoRepository;
-import com.juliano.pokemon.repository.WildPokemonRepository;
-
-import lombok.AllArgsConstructor;
+import java.util.Random;
 
 @AllArgsConstructor
 @Service
@@ -55,7 +49,7 @@ public class WildPokemonService {
 		return wildpkmr.save(wp);
 	}
 	public WildPokemon getWild(Long id){
-		return wildpkmr.findById(id).get();
+		return wildpkmr.findById(id).orElse(null);
 	}
 
 	public void salvar(WildPokemon w){

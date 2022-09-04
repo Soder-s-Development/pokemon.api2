@@ -19,6 +19,7 @@ com\juliano\pokemon\service\WildPokemonService.class
 com\juliano\pokemon\api\Model\Pokemon.class
 com\juliano\pokemon\api\Model\Personagem.class
 com\juliano\pokemon\exceptionhandler\ApiExceptionHandler.class
+com\juliano\pokemon\config\SecurityConfig.class
 com\juliano\pokemon\repository\BolsaRepository.class
 com\juliano\pokemon\repository\BatalhaRepository.class
 com\juliano\pokemon\service\BolsaService.class

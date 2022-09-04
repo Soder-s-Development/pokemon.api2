@@ -1,19 +1,13 @@
 package com.juliano.pokemon.service;
 
-import java.util.ArrayList;
-import java.util.Optional;
-
 import com.juliano.pokemon.api.Model.*;
+import com.juliano.pokemon.repository.*;
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.juliano.pokemon.repository.PersonagemRepository;
-import com.juliano.pokemon.repository.PoderRepository;
-import com.juliano.pokemon.repository.PokemonExperienciaRepository;
-import com.juliano.pokemon.repository.PokemonRepository;
-import com.juliano.pokemon.repository.PokemonUnicoRepository;
-
-import lombok.AllArgsConstructor;
+import java.util.ArrayList;
+import java.util.Optional;
 
 @AllArgsConstructor
 @Service
@@ -21,7 +15,7 @@ public class PokemonUnicoService {
 	
 	private PokemonRepository pkRepository;
 	private PokemonUnicoRepository pkuRepository;
-	private PoderRepository pr;
+	private PoderUnicoRepository pr;
 	private PokemonExperienciaRepository pmkER;
 	
 	@Autowired
@@ -35,6 +29,11 @@ public class PokemonUnicoService {
 			return null;
 		}
 		PokemonUnico pkmu = pkuRepository.save(new PokemonUnico(pkRepository.getById(id), apelido, pid, g));
+		PoderUnico pd = new PoderUnico();
+		pd.setId_power(1L);
+		pd.setId_pokemon_unico(pkmu.getId());
+		pd.setLevel(1);
+		pr.save(pd);
 		pkuService.atualizaPoderes(pkmu.getId(), 1, 1);
 		PokemonExperiencia pkmE = new PokemonExperiencia(pkmu.getId());
 		int position = this.getPartyLength(pid) + 1;

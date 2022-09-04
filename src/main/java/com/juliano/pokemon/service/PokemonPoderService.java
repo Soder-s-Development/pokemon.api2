@@ -84,7 +84,7 @@ public class PokemonPoderService {
 	}
 
 	public PokemonPoder getPoder(Long id){
-		return pdrr.findById(id).get();
+		return pdrr.findById(id).orElse(null);
 	}
 	
 	public int calculaDano(Pokemon pkm_atk, Pokemon pkm_def, PokemonPoder pp) {

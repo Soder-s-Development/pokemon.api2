@@ -1,17 +1,16 @@
 package com.juliano.pokemon.api.controller;
 
-import java.net.http.HttpResponse;
-import java.util.Optional;
-import java.util.Random;
-
 import com.juliano.pokemon.api.Model.*;
 import com.juliano.pokemon.repository.PoderUnicoRepository;
 import com.juliano.pokemon.service.*;
+import lombok.AllArgsConstructor;
+import org.hibernate.annotations.Any;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import lombok.AllArgsConstructor;
+import java.util.Optional;
+import java.util.Random;
 
 @RestController
 @RequestMapping("/batalha")
@@ -33,12 +32,8 @@ public class BatalhaController {
 	private PokemonPoderService poderService;
 
 	@PostMapping("/{id1}/{id2}")
-	public ResponseEntity<Batalha> iniciarBatalha(@PathVariable Long id1, @PathVariable Long id2) {
-		Batalha b = btservice.iniciarBatalha(id1, id2);
-		if(b != null) {
-			return ResponseEntity.ok(b);
-		}
-		return ResponseEntity.badRequest().build();
+	public ResponseEntity<Any> iniciarBatalha(@PathVariable Long id1, @PathVariable Long id2) {
+		return btservice.iniciarBatalha(id1, id2);
 	}
 
 	@GetMapping("/foundPokemon/{level}")
@@ -87,10 +82,10 @@ public class BatalhaController {
 		return ResponseEntity.ok(json);
 	}
 
-
-	@PostMapping("wildAttack/{id1}/{id2}/power/{idp}/{btid}")
+	@PostMapping("/wildAttack/{id1}/{id2}/power/{idp}/{btid}")
 	public ResponseEntity wildAttack(@PathVariable Long id1, @PathVariable Long id2, @PathVariable Long idp, @PathVariable Long btid){
-		if(id1 < 1 || id2 < 1 || id2 < 1 || idp < 1 || btid < 1){
+		if ( idp < 1 ) idp = Long.valueOf(1);
+		if(id1 < 1 || id2 < 1 || id2 < 1 || btid < 1){
 			ResponseEntity.status(400)
 					.body("Parâmetros inválidos na requisição");
 		}
@@ -102,26 +97,31 @@ public class BatalhaController {
 		WildPokemon w = wpms.getWild(id1);
 		PokemonPoder pp = poderService.getPoder(idp);
 		Batalha bt = btservice.getBatalha(btid).isPresent() ? btservice.getBatalha(btid).get() : null;
+
 		if(bt == null){
-			return ResponseEntity.ok("There is no battle running");
+			return ResponseEntity.ok("Não tem batalha registrada");
 		}
-
+		if(w == null){
+			return ResponseEntity.status(404).body("Pokemon Selvagem não existe");
+		}
+		if(pp == null){
+			return ResponseEntity.status(404).body("Poder não existe");
+		}
 		int dano = poderService.calculaDano(pkms.getPokemon(w.getId_pokemon()), pkms.getPokemon(p.getId_pokemon()), pp);
-
 		if((p.getHp_atual()-dano)<1){
 			p.setHp_atual(0);
 			bt.setVida_p1(0);
 			pmus.salvar(p);
 			btservice.save(bt);
-			var json = "dano:"+dano+",hp_pokemon: 0";
-			return ResponseEntity.ok(json);
+			var res = "dano:"+dano+",hp_pokemon: 0";
+			return ResponseEntity.ok(res);
 		}
 		bt.setVida_p1(p.getHp_atual()-dano);
 		p.setHp_atual(p.getHp_atual()-dano);
-		var json = "dano:"+dano+",hp_pokemon: "+w.getHp_atual();
+		var res = "dano:"+dano+",hp_pokemon: "+w.getHp_atual();
 		pmus.salvar(p);
 		btservice.save(bt);
 		pmus.salvar(p);
-		return ResponseEntity.ok(json);
+		return ResponseEntity.ok(res);
 	}
 }
