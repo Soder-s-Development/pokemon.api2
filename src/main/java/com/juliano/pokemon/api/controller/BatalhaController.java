@@ -118,7 +118,7 @@ public class BatalhaController {
 		}
 		bt.setVida_p1(p.getHp_atual()-dano);
 		p.setHp_atual(p.getHp_atual()-dano);
-		var res = "dano:"+dano+",hp_pokemon: "+w.getHp_atual();
+		String res = "dano:"+dano+",hp_pokemon: "+p.getHp_atual();
 		pmus.salvar(p);
 		btservice.save(bt);
 		pmus.salvar(p);
