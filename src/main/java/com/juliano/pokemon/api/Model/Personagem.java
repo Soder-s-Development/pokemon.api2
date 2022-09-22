@@ -2,6 +2,10 @@ package com.juliano.pokemon.api.Model;
 
 import lombok.*;
 
+import java.util.List;
+import java.util.Objects;
+import java.util.Set;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -26,6 +30,24 @@ public class Personagem {
 	@NotNull
 	@NotBlank
 	private String nome;
-	private String pkmu_ids;
-	private String hold_ids;
+	private Set<Long> pkmu_ids;
+	private Set<Long> hold_ids;
+	
+	public int getPartyLength() {
+		return this.hold_ids.size();
+	}
+	
+	public boolean hasSpaceInParty() {
+		return this.hold_ids.size() < 6;
+	}
+	
+	public Set<Long> setPokemonIntoParty(Long id) {
+		if(hasSpaceInParty()) {
+			hold_ids.add(id);
+			pkmu_ids.add(id);
+		}else {
+			pkmu_ids.add(id);
+		}
+		return this.pkmu_ids;
+	}
 }

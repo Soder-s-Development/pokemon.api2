@@ -13,6 +13,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.List;
 import java.util.Objects;
 
 @Getter
@@ -55,10 +56,7 @@ public class PokemonUnico{
 	private boolean vivo = true;
 	private String genero;
 	
-	private Long poder1;
-	private Long poder2;
-	private Long poder3;
-	private Long poder4;
+	private List<PoderUnico> poderes;
 	
 	private int adicional_poder1;
 	private int adicional_poder2;
@@ -70,7 +68,7 @@ public class PokemonUnico{
 	private int stamina_atual;
 	private int evoluvao_estado;
 	
-	public PokemonUnico(Pokemon pkm, String apelido, Long personagemid, String genero) {
+	public PokemonUnico(Pokemon pkm, String apelido, Long personagemid, String genero, int nivel, List<Long> novosPoderes) {
 		this.nivel = 1;
 		this.apelido = apelido;
 		this.personagem_id = personagemid;
@@ -87,9 +85,15 @@ public class PokemonUnico{
 		this.stamina_atual = stamina;
 		this.nome_pokemon = pkm.getNome();
 		this.evoluvao_estado = pkm.getEstado();
+		
+		novosPoderes.forEach(p -> {
+			this.poderes.add(new PoderUnico().builder().ativo(true).id_power(p).id_pokemon_unico(this.id).level(1).build());
+		});
 
 		this.genero = Objects.requireNonNullElseGet(genero, () -> (int) Math.floor(Math.random() * (10 - 0 + 1) + 0) % 2 == 0 ? "M" : "F");
-
+		
+		this.nivel = nivel > this.nivel ? nivel : this.nivel;
+		
 		System.out.println("pokemon capturado! Genero -> "+this.genero);
 	}
 	public void evoluir(PokemonUnico pkmunico, Pokemon pkm){
@@ -130,6 +134,12 @@ public class PokemonUnico{
 
 		this.evoluvao_estado++;
 		System.out.println("pokemon evoluído para op estágio"+this.evoluvao_estado +"! Nome -> "+this.getNome_pokemon());
+	}
+	
+	public PoderUnico aprenderNovoPoder(Long id) {
+		PoderUnico poder = new PoderUnico().builder().id_power(id).id_pokemon_unico(this.id).level(1).build();
+		poderes.add(poder);
+		return poder;
 	}
 	
 	public Boolean podeAtacar(PokemonPoder poder) {

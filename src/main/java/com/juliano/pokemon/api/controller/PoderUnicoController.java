@@ -1,6 +1,7 @@
 package com.juliano.pokemon.api.controller;
 
 import com.juliano.pokemon.api.Model.PoderUnico;
+import com.juliano.pokemon.api.Model.PokemonUnico;
 import com.juliano.pokemon.repository.PoderRepository;
 import com.juliano.pokemon.repository.PoderUnicoRepository;
 import com.juliano.pokemon.service.PokemonUnicoService;
@@ -12,6 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
+import java.util.Optional;
 
 @ComponentScan
 @RestController
@@ -31,11 +33,8 @@ public class PoderUnicoController {
 	@ResponseStatus(HttpStatus.CREATED)
 	public Object aprendePoder(@PathVariable Long id, @PathVariable Long id_pkm) {
 		System.out.println("Aprendendo poder");
-		PoderUnico pu = getPoderUnico(id, id_pkm);
-		var npu = pdur.save(pu);
-		//aprendePoder(id_pkm, npu.getId());
-		pkus.aprenderPoderPU(npu);
-		return npu;
+		Optional<PokemonUnico> pkmu = pkus.getPokemon(id_pkm);
+		return pkmu.isPresent() ? pkus.aprenderPoderPU(pkmu.get(), id) : null;
 	}
 
 	private PoderUnico getPoderUnico(Long id, Long id_pkm) {

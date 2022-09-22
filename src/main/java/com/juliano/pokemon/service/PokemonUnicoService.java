@@ -4,18 +4,28 @@ import com.juliano.pokemon.api.Model.*;
 import com.juliano.pokemon.repository.*;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 @AllArgsConstructor
 @Service
 public class PokemonUnicoService {
 	
+	@Autowired
 	private PokemonRepository pkRepository;
+	
+	@Autowired
 	private PokemonUnicoRepository pkuRepository;
+	
+	@Autowired
 	private PoderUnicoRepository pr;
+	
+	@Autowired
 	private PokemonExperienciaRepository pmkER;
 	
 	@Autowired
@@ -24,121 +34,31 @@ public class PokemonUnicoService {
 	@Autowired
 	private PokemonPoderService pkuService;
 	
-	public Object capturar(Long id, String apelido, Long pid, String g) {
-		if(this.findPersonagem(pid)==false) {
-			return null;
+	public ResponseEntity<Object> capturar(Long id, String apelido, Long pid, String genero, List<Long> novosPoderes) {
+		Optional<Personagem> p = perr.findById(pid);
+		if(!p.isPresent()) {
+			return ResponseEntity.status(404).body("Personagem inixistente");
 		}
-		PokemonUnico pkmu = pkuRepository.save(new PokemonUnico(pkRepository.getById(id), apelido, pid, g));
-		PoderUnico pd = new PoderUnico();
-		pd.setId_power(1L);
-		pd.setId_pokemon_unico(pkmu.getId());
-		pd.setLevel(1);
-		pr.save(pd);
-		pkuService.atualizaPoderes(pkmu.getId(), 1, 1);
-		PokemonExperiencia pkmE = new PokemonExperiencia(pkmu.getId());
-		int position = this.getPartyLength(pid) + 1;
-		System.out.println("positions size is "+position);
-		if(position < 7) {
-			Personagem p = this.setPokemonParty(pid, position, pkmu.getId());
-			System.out.println(p);
-			perr.save(p);
-		}else{
-			extracted(pid, pkmu);
-		}
-		pmkER.save(pkmE);
-		return pkmu;
+		PokemonUnico pkmu = pkuRepository.save(new PokemonUnico(pkRepository.getById(id), apelido, pid, genero, 1, novosPoderes));
+		
+		pkmu.getPoderes().forEach( poderunico -> {
+			pr.save(poderunico);
+		});
+		
+		PokemonExperiencia pkmEx = new PokemonExperiencia(pkmu.getId());
+		pmkER.save(pkmEx);
+		p.get().setPokemonIntoParty(pkmu.getId());
+		perr.save(p.get());
+		return ResponseEntity.ok(pkmu);
 	}
 
-	private void extracted(Long id, PokemonUnico pkmu) {
-		Optional<Personagem> p = perr.findById(id);
-		if ( !p.isEmpty() ) {
-			p.get().setPkmu_ids(p.get().getPkmu_ids() + "," + String.valueOf(pkmu.getId()));
-			perr.save(p.get());
-		} else new Exception("Invalid player");
-	}
-
-	private Boolean findPersonagem(Long id) {
-		Optional<Personagem> p = perr.findById(id);
-		System.out.println(p.isEmpty());
-		if(p.isEmpty()) {
-			return false;
-		}
-		return true;
+	public PoderUnico aprenderPoderPU(PokemonUnico p, Long id) {
+		PoderUnico pu = p.aprenderNovoPoder(id);
+		pr.save(pu);
+		pkuRepository.save(p);
+		return pu;
 	}
 	
-	private Personagem setPokemonParty(Long id, int position, Long pku_id) {
-		Optional<Personagem> p = perr.findById(id);
-		System.out.println(p.isEmpty());
-		if(p.isEmpty()) {
-			new Exception("Invalid player");
-		}
-		if(p.get().getHold_ids().isBlank() || p.get().getHold_ids().isEmpty()) {
-			p.get().setHold_ids(String.valueOf(pku_id));
-			p.get().setPkmu_ids(String.valueOf(pku_id));
-			return p.get();
-		}
-		String[] result = p.get().getHold_ids().split(",");
-		ArrayList<String> list = new ArrayList<>();
-		for (String string : result) {
-			list.add(string);
-		}
-		list.add(String.valueOf(pku_id));
-		String fs = "";
-		for(var i = 0; i < list.size(); i++) {
-			if(i==0) {
-				fs += list.get(i);
-			}else {
-				fs += ","+list.get(i);
-			}
-		}
-		p.get().setHold_ids(fs);
-		p.get().setPkmu_ids(p.get().getPkmu_ids() + "," + String.valueOf(pku_id));
-		return p.get();
-	}
-	private int getPartyLength(Long id) {
-		Optional<Personagem> p = perr.findById(id);
-		System.out.println(p.isEmpty());
-		if(p.isEmpty()) {
-			new Exception("Invalid player");
-		}
-		if(!p.get().getHold_ids().isBlank() || !p.get().getHold_ids().isEmpty()) {
-			String[] result = p.get().getHold_ids().split(",");
-			return result.length;
-		}
-		return 0;
-	}
-	public Long aprenderPoderPU(PoderUnico p) {
-		PokemonUnico pku  = pkuRepository.findById(p.getId_pokemon_unico()).get();
-		if(pku.getPoder1()==null) {
-			pku.setPoder1(p.getId());
-		}else if(pku.getPoder1()!=null && pku.getPoder2()==null) {
-			pku.setPoder2(p.getId());
-		}else if(pku.getPoder1()!=null && pku.getPoder2()!=null && pku.getPoder3()==null) {
-			pku.setPoder3(p.getId());
-		}else if(pku.getPoder1()!=null && pku.getPoder2()!=null && pku.getPoder3()!=null && pku.getPoder4()==null) {
-			pku.setPoder4(p.getId());
-		}else {
-			return 0L;
-		}
-		pkuRepository.save(pku);
-		return p.getId();
-	}
-	public Long atualizarPoderPU(PoderUnico p, int qual) {
-		PokemonUnico pku  = pkuRepository.findById(p.getId_pokemon_unico()).get();
-		if(qual==1) {
-			pku.setPoder1(p.getId());
-		}else if(qual==2) {
-			pku.setPoder2(p.getId());
-		}else if(qual==3) {
-			pku.setPoder3(p.getId());
-		}else if(qual==4) {
-			pku.setPoder4(p.getId());
-		}else {
-			return 0L;
-		}
-		pkuRepository.save(pku);
-		return p.getId();
-	}
 	public Optional<PokemonUnico> getPokemon(Long id){
 		return pkuRepository.findById(id);
 	}

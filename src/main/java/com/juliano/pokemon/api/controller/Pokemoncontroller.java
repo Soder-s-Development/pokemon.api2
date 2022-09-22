@@ -57,8 +57,8 @@ public class Pokemoncontroller {
 	}
 	
 	@PostMapping("/capturar/{id}/{apelido}/{personagem_id}/{genero}")
-	public PokemonUnico capturar(@PathVariable String genero, @PathVariable Long id, @PathVariable String apelido, @PathVariable Long personagem_id) {
-		return (PokemonUnico) puservice.capturar(id, apelido, personagem_id, genero);
+	public ResponseEntity<Object> capturar(@PathVariable String genero, @PathVariable Long id, @PathVariable String apelido, @PathVariable Long personagem_id, @RequestBody List<Long> listPoderes) {
+		return puservice.capturar(id, apelido, personagem_id, genero, listPoderes);
 	}
 
 	@GetMapping("/estado/{id}")
