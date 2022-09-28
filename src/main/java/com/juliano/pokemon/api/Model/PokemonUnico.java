@@ -1,31 +1,45 @@
 package com.juliano.pokemon.api.Model;
 
+import java.util.List;
+import java.util.Optional;
+
+import static java.util.Objects.requireNonNullElseGet;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 
-import com.juliano.pokemon.service.PokemonPoderService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.lang.Nullable;
 
+import com.juliano.pokemon.repository.PoderRepository;
+import com.juliano.pokemon.repository.PoderUnicoRepository;
+
+import javassist.NotFoundException;
+import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.List;
-import java.util.Objects;
-
 @Getter
 @Setter
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @Entity
+@AllArgsConstructor
 @NoArgsConstructor
 public class PokemonUnico{
-	
+		
 	@NotNull
 	private String tipo;
+	
+	@Nullable
 	private String apelido;
+	
+	@Nullable
 	private int nivel;
 	
 	@EqualsAndHashCode.Include
@@ -39,7 +53,7 @@ public class PokemonUnico{
 	private String nome_pokemon;
 	
 	@NotNull
-	private Long personagem_id;
+	private Long personagemId;
 	
 	
 	private int novo_hp;
@@ -56,22 +70,15 @@ public class PokemonUnico{
 	private boolean vivo = true;
 	private String genero;
 	
-	private List<PoderUnico> poderes;
-	
-	private int adicional_poder1;
-	private int adicional_poder2;
-	private int adicional_poder3;
-	private int adicional_poder4;
-
 	private int hp_atual;
 	private int stamina;
 	private int stamina_atual;
 	private int evoluvao_estado;
 	
-	public PokemonUnico(Pokemon pkm, String apelido, Long personagemid, String genero, int nivel, List<Long> novosPoderes) {
+	public PokemonUnico(Pokemon pkm, String apelido, Long personagemid, String genero, int nivel, PoderUnicoRepository poderRepository) {
 		this.nivel = 1;
-		this.apelido = apelido;
-		this.personagem_id = personagemid;
+		this.apelido = requireNonNullElseGet(apelido, () -> pkm.getNome());
+		this.personagemId = personagemid;
 		this.tipo = pkm.getTipo();
 		this.id_pokemon = pkm.getId();
 		this.novo_hp = pkm.getHp()+(int)Math.floor(Math.random()*(10-0+1)+0);
@@ -86,11 +93,8 @@ public class PokemonUnico{
 		this.nome_pokemon = pkm.getNome();
 		this.evoluvao_estado = pkm.getEstado();
 		
-		novosPoderes.forEach(p -> {
-			this.poderes.add(new PoderUnico().builder().ativo(true).id_power(p).id_pokemon_unico(this.id).level(1).build());
-		});
 
-		this.genero = Objects.requireNonNullElseGet(genero, () -> (int) Math.floor(Math.random() * (10 - 0 + 1) + 0) % 2 == 0 ? "M" : "F");
+		this.genero = requireNonNullElseGet(genero, () -> (int) Math.floor(Math.random() * (10 - 0 + 1) + 0) % 2 == 0 ? "M" : "F");
 		
 		this.nivel = nivel > this.nivel ? nivel : this.nivel;
 		
@@ -136,9 +140,10 @@ public class PokemonUnico{
 		System.out.println("pokemon evoluído para op estágio"+this.evoluvao_estado +"! Nome -> "+this.getNome_pokemon());
 	}
 	
-	public PoderUnico aprenderNovoPoder(Long id) {
-		PoderUnico poder = new PoderUnico().builder().id_power(id).id_pokemon_unico(this.id).level(1).build();
-		poderes.add(poder);
+	public PoderUnico aprenderNovoPoder(Long id, PoderUnicoRepository poderRepository) {
+		System.out.println("criando novo poder a partir do id: "+id);
+		PoderUnico poder = new PoderUnico().builder().idPoder(id).pokemonUnico(this.id).level(1).pokemonUnico(this.id).build();
+		poderRepository.save(poder);
 		return poder;
 	}
 	
@@ -148,5 +153,13 @@ public class PokemonUnico{
 		}
 		this.setStamina_atual((this.getStamina_atual()-poder.getDanobase()));
 		return true;
+	}
+	
+	public List<PoderUnico> getPoderesUnicos(PoderUnicoRepository poderRepository) {
+		return poderRepository.findByPokemonUnico(this.id);
+	}
+	
+	public PokemonPoder getPokemonPoder(PoderRepository poderRepository, Long id) throws NotFoundException {
+		return Optional.ofNullable(poderRepository.findById(id).get()).orElseThrow(() -> new NotFoundException("Erro ao buscar poder com o id: "+id));
 	}
 }

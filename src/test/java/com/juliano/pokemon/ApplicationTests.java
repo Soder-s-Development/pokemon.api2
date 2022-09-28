@@ -2,6 +2,9 @@ package com.juliano.pokemon;
 
 import com.juliano.pokemon.repository.BatalhaRepository;
 import com.juliano.pokemon.service.BatalhaService;
+
+import javassist.NotFoundException;
+
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -47,9 +50,9 @@ class ApplicationTests {
 	}
 
 	@Test
-	public void shouldGetBatalha(){
+	public void shouldGetBatalha() throws NotFoundException{
 		when(br.findById(1L)).thenReturn(Optional.ofNullable(umaBatalha().agora()));
-		assertEquals(1L, bt.getBatalha(1L).get().getId_conta1());
+		assertEquals(1L, bt.getBatalha(1L).getId_conta1());
 	}
 
 }

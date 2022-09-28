@@ -1,5 +1,7 @@
 package com.juliano.pokemon.api.controller;
 
+import java.util.List;
+
 import javax.validation.Valid;
 
 import org.springframework.http.ResponseEntity;
@@ -14,11 +16,14 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.juliano.pokemon.api.Model.Bolsa;
+import com.juliano.pokemon.api.Model.Item;
 import com.juliano.pokemon.repository.BolsaRepository;
+import com.juliano.pokemon.response.BolsaResponse;
 import com.juliano.pokemon.service.BolsaService;
 import com.juliano.pokemon.service.PokemonService;
 import com.juliano.pokemon.service.PokemonUnicoService;
 
+import javassist.NotFoundException;
 import lombok.AllArgsConstructor;
 
 @RestController
@@ -33,12 +38,14 @@ public class BolsaController {
 	public Bolsa criarBolsa(@Valid @RequestBody Bolsa bolsa) {
 		return bls.criarBolsa(bolsa);
 	}
+	
 	@PatchMapping("/item/{id}/{item}")
-	public Bolsa salvarItem(@PathVariable Long id, @PathVariable String item) {
-		return bls.atualizarItem(id, item);		
+	public List<Item> salvarItem(@PathVariable Long id, @PathVariable Long itemID) throws NotFoundException {
+		return bls.atualizarItem(id, itemID);		
 	}
+	
 	@GetMapping("{id}")
-	public ResponseEntity<Bolsa> getBolsa(@PathVariable Long id) {
-		return bls.getBolsa(id);
+	public ResponseEntity<BolsaResponse> getBolsa(@PathVariable Long id) throws NotFoundException {
+		return ResponseEntity.ok(bls.pegarMinhaBolsaCompleta(id));
 	}
 }

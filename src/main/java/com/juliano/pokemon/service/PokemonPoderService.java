@@ -1,87 +1,48 @@
 package com.juliano.pokemon.service;
 
 import com.juliano.pokemon.repository.PoderRepository;
+import com.juliano.pokemon.repository.PoderUnicoRepository;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.juliano.pokemon.api.Converter.Converter;
+import com.juliano.pokemon.api.Model.PoderUnico;
 import com.juliano.pokemon.api.Model.Pokemon;
 import com.juliano.pokemon.api.Model.PokemonPoder;
 import com.juliano.pokemon.api.Model.PokemonUnico;
 import com.juliano.pokemon.repository.PokemonUnicoRepository;
+import com.juliano.pokemon.response.PoderesResponse;
 
+import javassist.NotFoundException;
 import lombok.AllArgsConstructor;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @Service
 @AllArgsConstructor
 public class PokemonPoderService {
+	
 	@Autowired
 	private PokemonUnicoRepository pkmur;
+	
 	@Autowired
 	private PoderRepository pdrr;
+	
+	@Autowired
+	private PoderUnicoRepository poderRepository;
 
-	public PokemonUnico aprendePoder(long pkuid, long pdu){
+	public PokemonUnico aprendePoder(long pkuid, long pd){
 		Optional<PokemonUnico> pkmu = pkmur.findById(pkuid);
-		if(pkmu.isEmpty() == true)
+		if(pkmu.isEmpty() == true) {
 			new Exception("Pokemon não encontrado");
-		int posicao = this.posicaoDisponivel(pkmu.get());
-		if(posicao < 0){
-			new Exception("Todas as posições estão preenchidas");
 		}
-		switch (posicao){
-			case 1:
-				pkmu.get().setPoder1(pdu);
-				break;
-			case 2:
-				pkmu.get().setPoder2(pdu);
-				break;
-			case 3:
-				pkmu.get().setPoder3(pdu);
-				break;
-			case 4:
-				pkmu.get().setPoder4(pdu);
-				break;
-		}
+		pkmu.get().aprenderNovoPoder(pd, poderRepository);
 		return pkmur.save(pkmu.get());
 	}
-	public int posicaoDisponivel(PokemonUnico pk){
-		boolean[] arr = {false, false, false, false};
-		if(pk.getPoder1() > 0){
-			arr[0] = true;
-		}  if (pk.getPoder2() > 0) {
-			arr[1] = true;
-		}  if (pk.getPoder3() > 0) {
-			arr[2] = true;
-		} if (pk.getPoder4() > 0) {
-			arr[3] = true;
-		}
-		for(var i = 0; i < arr.length; i++){
-			if (arr[i] == false){
-				return i+1;
-			}
-		}
-		return -1;
-	}
-	public PokemonUnico atualizaPoderes(long pkmuid, long idpoder, int position) {
-		PokemonUnico pkmu = pkmur.findById(pkmuid).get();
-		switch (position) {
-		case 2:
-			pkmu.setPoder2(idpoder);
-			break;
-		case 3:
-			pkmu.setPoder3(idpoder);
-			break;
-		case 4:
-			pkmu.setPoder4(idpoder);
-			break;
-		default:
-			pkmu.setPoder1(idpoder);
-			break;
-		}
-		
-		return pkmur.save(pkmu);
-	}
+	
 
 	public PokemonPoder getPoder(Long id){
 		return pdrr.findById(id).orElse(null);
@@ -212,5 +173,28 @@ public class PokemonPoderService {
 			return aatk;
 		}
 		return aspa;
+	}
+
+	public List<PoderesResponse> getPoderes(Long pokemonUnicoId) throws NotFoundException {
+		PokemonUnico pu = Optional.ofNullable(pkmur.findById(pokemonUnicoId).get())
+				.orElseThrow(() -> new NotFoundException("Pokemon inixistente"));
+		
+		List<PoderUnico> poderesUnicosAtivos = pu.getPoderesUnicos(poderRepository).stream()
+				.filter(p -> p.isAtivo()).toList();
+			
+		if(poderesUnicosAtivos.size() < 1) {
+			new NotFoundException("Nao tem poderes"); 
+		}
+		
+		List<PokemonPoder> poderesAtivos = poderesUnicosAtivos.stream()
+				.map(p -> Optional.ofNullable(pdrr.findById(p.getIdPoder()).get()).get()).toList();
+		
+		
+		List<PoderesResponse> poderes = new ArrayList<PoderesResponse>();
+		
+		for (int i = 0; i < poderesUnicosAtivos.size(); i++) {
+			poderes.add(Converter.from(poderesUnicosAtivos.get(i), poderesAtivos.get(i)));
+		}
+		return poderes;
 	}
 }

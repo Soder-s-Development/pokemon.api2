@@ -14,12 +14,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.juliano.pokemon.api.Model.Pokemon;
-import com.juliano.pokemon.api.Model.PokemonUnico;
-import com.juliano.pokemon.repository.PokemonUnicoRepository;
 import com.juliano.pokemon.service.PokemonService;
 import com.juliano.pokemon.service.PokemonUnicoService;
 
@@ -56,8 +55,11 @@ public class Pokemoncontroller {
 		return pservice.retornarPk(pokemonId);
 	}
 	
-	@PostMapping("/capturar/{id}/{apelido}/{personagem_id}/{genero}")
-	public ResponseEntity<Object> capturar(@PathVariable String genero, @PathVariable Long id, @PathVariable String apelido, @PathVariable Long personagem_id, @RequestBody List<Long> listPoderes) {
+	@PostMapping("/capturar/{id}/{personagem_id}")
+	public ResponseEntity<Object> capturar(@RequestParam(name = "genero", required = false) String genero, 
+			@PathVariable Long id, 
+			@RequestParam(name="apelido", required=false) String apelido, 
+			@PathVariable Long personagem_id, @RequestBody List<Long> listPoderes) {
 		return puservice.capturar(id, apelido, personagem_id, genero, listPoderes);
 	}
 

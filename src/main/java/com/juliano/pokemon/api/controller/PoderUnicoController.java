@@ -4,7 +4,11 @@ import com.juliano.pokemon.api.Model.PoderUnico;
 import com.juliano.pokemon.api.Model.PokemonUnico;
 import com.juliano.pokemon.repository.PoderRepository;
 import com.juliano.pokemon.repository.PoderUnicoRepository;
+import com.juliano.pokemon.response.PoderesResponse;
+import com.juliano.pokemon.service.PokemonPoderService;
 import com.juliano.pokemon.service.PokemonUnicoService;
+
+import javassist.NotFoundException;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.ComponentScan;
@@ -13,6 +17,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Optional;
 
 @ComponentScan
@@ -29,23 +34,30 @@ public class PoderUnicoController {
 	@Autowired
 	private PokemonUnicoService pkus;
 	
+	@Autowired
+	private PokemonPoderService service;
+	
 	@PostMapping("/{id}/{id_pkm}")
 	@ResponseStatus(HttpStatus.CREATED)
 	public Object aprendePoder(@PathVariable Long id, @PathVariable Long id_pkm) {
 		System.out.println("Aprendendo poder");
-		Optional<PokemonUnico> pkmu = pkus.getPokemon(id_pkm);
-		return pkmu.isPresent() ? pkus.aprenderPoderPU(pkmu.get(), id) : null;
+		return service.aprendePoder(id_pkm, id);
 	}
 
 	private PoderUnico getPoderUnico(Long id, Long id_pkm) {
 		PoderUnico pu = new PoderUnico();
-		pu.setId_pokemon_unico(id_pkm);
-		pu.setId_power(id);
+		pu.setPokemonUnico(id_pkm);
+		pu.setPokemonUnico(id);
 		pu.setLevel(1);
 		pu.setSome_effect("");
 		return pu;
 	}
 
+	@GetMapping("/{id_pkm}")
+	public ResponseEntity<List<PoderesResponse>> getPoderUnicoGetPokemonPoderes(@PathVariable Long id_pkm) throws NotFoundException {
+		return ResponseEntity.ok(service.getPoderes(id_pkm));
+	}
+	
 	@GetMapping("/{id1}/{id2}/{id3}/{id4}")
 	public ResponseEntity<HashMap> getMeusPoderes(@PathVariable Long id1, @PathVariable Long id2, @PathVariable Long id3, @PathVariable Long id4) {
 		HashMap<String, Object> map = new HashMap<>();
@@ -62,7 +74,7 @@ public class PoderUnicoController {
 		}
 		if (pdu.getId() > 0) {
 			map.put("poderUnico1", pdu);
-			map.put("poder1", pr.findById(pdu.getId_power()));
+			map.put("poder1", pr.findById(pdu.getIdPoder()));
 			pdu = null;
 		}
 		if(id2 > 0){
@@ -70,7 +82,7 @@ public class PoderUnicoController {
 		}
 		if (pdu != null) {
 			map.put("poderUnico2", pdu);
-			map.put("poder2", pr.findById(pdu.getId_power()));
+			map.put("poder2", pr.findById(pdu.getIdPoder()));
 			pdu = null;
 		}
 		if(id3 > 0){
@@ -78,7 +90,7 @@ public class PoderUnicoController {
 		}
 		if (pdu != null) {
 			map.put("poderUnico3", pdu);
-			map.put("poder3", pr.findById(pdu.getId_power()));
+			map.put("poder3", pr.findById(pdu.getIdPoder()));
 			pdu = null;
 		}
 		if(id4 > 0){
@@ -86,7 +98,7 @@ public class PoderUnicoController {
 		}
 		if (pdu != null) {
 			map.put("poderUnico4", pdu);
-			map.put("poder4", pr.findById(pdu.getId_power()));
+			map.put("poder4", pr.findById(pdu.getIdPoder()));
 			pdu = null;
 		}
 		return ResponseEntity.status(200).body(map);
