@@ -21,7 +21,6 @@ com/juliano/pokemon/api/Model/Batalha.class
 com/juliano/pokemon/api/Model/Item$ItemBuilder.class
 com/juliano/pokemon/response/PokemonUnicoResponse.class
 com/juliano/pokemon/repository/PoderUnicoRepository.class
-com/juliano/pokemon/api/controller/Pokemoncontroller.class
 com/juliano/pokemon/response/PokemonUnicoResponse$PokemonUnicoResponseBuilder.class
 com/juliano/pokemon/config/SecurityConfig.class
 com/juliano/pokemon/response/BatalhaResponse.class
@@ -30,6 +29,7 @@ com/juliano/pokemon/Application.class
 com/juliano/pokemon/service/WildPokemonService.class
 com/juliano/pokemon/api/Model/Personagem.class
 com/juliano/pokemon/api/Model/PoderUnico.class
+com/juliano/pokemon/api/controller/PokemonController.class
 com/juliano/pokemon/api/Converter/Converter.class
 com/juliano/pokemon/api/Model/PoderUnico$PoderUnicoBuilder.class
 com/juliano/pokemon/api/Model/WildPokemon.class

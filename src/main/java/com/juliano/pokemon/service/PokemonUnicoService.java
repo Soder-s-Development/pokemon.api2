@@ -52,7 +52,7 @@ public class PokemonUnicoService {
 	public ResponseEntity<Object> capturar(Long id, String apelido, Long pid, String genero, List<Long> novosPoderes) {
 		Optional<Personagem> p = personagemRepository.findById(pid);
 		if(!p.isPresent()) {
-			return ResponseEntity.status(404).body("Personagem inixistente");
+			return ResponseEntity.status(404).body("Personagem não encontrado");
 		}
 		PokemonUnico pkmu = pkuRepository.save(new PokemonUnico(pkRepository.getById(id), apelido, pid, genero, 1, poderUnicoRepository));
 		

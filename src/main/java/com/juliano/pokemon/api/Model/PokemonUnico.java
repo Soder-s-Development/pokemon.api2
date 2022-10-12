@@ -87,8 +87,8 @@ public class PokemonUnico{
 		this.novo_spa = pkm.getSpa()+(int)Math.floor(Math.random()*(10-0+1)+0);
 		this.novo_spd = pkm.getSpd()+(int)Math.floor(Math.random()*(10-0+1)+0);
 		this.novo_spe = pkm.getSpe()+(int)Math.floor(Math.random()*(10-0+1)+0);
-		this.hp_atual = pkm.getHp()*10;
-		this.stamina = pkm.getHp()+pkm.getSpe();
+		this.hp_atual = (pkm.getHp()+nivel)*10;
+		this.stamina = (pkm.getHp()+pkm.getSpe())*10;
 		this.stamina_atual = stamina;
 		this.nome_pokemon = pkm.getNome();
 		this.evoluvao_estado = pkm.getEstado();

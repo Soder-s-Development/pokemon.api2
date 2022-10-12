@@ -31,7 +31,7 @@
 /home/soder/git/pokemon.api2/src/main/java/com/juliano/pokemon/repository/PokemonRepository.java
 /home/soder/git/pokemon.api2/src/main/java/com/juliano/pokemon/api/controller/PokemonUnicoController.java
 /home/soder/git/pokemon.api2/src/main/java/com/juliano/pokemon/response/BatalhaResponse.java
-/home/soder/git/pokemon.api2/src/main/java/com/juliano/pokemon/api/controller/Pokemoncontroller.java
+/home/soder/git/pokemon.api2/src/main/java/com/juliano/pokemon/api/controller/PokemonController.java
 /home/soder/git/pokemon.api2/src/main/java/com/juliano/pokemon/api/Model/WildPokemon.java
 /home/soder/git/pokemon.api2/src/main/java/com/juliano/pokemon/api/Model/Batalha.java
 /home/soder/git/pokemon.api2/src/main/java/com/juliano/pokemon/builder/BatalhaBuilder.java

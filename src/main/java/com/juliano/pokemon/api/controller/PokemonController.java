@@ -28,7 +28,7 @@ import lombok.AllArgsConstructor;
 @RequestMapping("/pokemons")
 @AllArgsConstructor
 @CrossOrigin(origins = "*", originPatterns = "*", methods = {RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT, RequestMethod.DELETE, RequestMethod.PATCH})
-public class Pokemoncontroller {
+public class PokemonController {
 	
 //
 //	@Autowired
