@@ -93,4 +93,8 @@ public class Batalha {
 		return Optional.ofNullable(selvagemRepository.findById(this.pokemonSelvagemId).get())
 		.orElseThrow(() -> new NotFoundException("Pokemon selvagem não encontrado ou inixistente"));
 	}
+	
+	public Boolean playr1IsPresent() {
+		return id_conta1 > 0;
+	}
 }

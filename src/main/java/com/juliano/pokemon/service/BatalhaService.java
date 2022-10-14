@@ -108,7 +108,7 @@ public class BatalhaService {
 			new IllegalStateException("Nenhum pokemon vivo");
 		}
 		
-		if(bt.getId_conta1() > 0L) {
+		if(bt.playr1IsPresent()) {
 			bt.setId_conta2(idconta);
 		}else {
 			bt.setId_conta1(idconta);
