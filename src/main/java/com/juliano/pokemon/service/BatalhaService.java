@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import com.juliano.pokemon.api.Converter.Converter;
 import com.juliano.pokemon.api.Model.Batalha;
 import com.juliano.pokemon.api.Model.Personagem;
 import com.juliano.pokemon.api.Model.PoderUnico;
@@ -20,6 +21,7 @@ import com.juliano.pokemon.repository.PersonagemRepository;
 import com.juliano.pokemon.repository.PoderUnicoRepository;
 import com.juliano.pokemon.repository.PokemonUnicoRepository;
 import com.juliano.pokemon.repository.WildPokemonRepository;
+import com.juliano.pokemon.response.BatalhaResponse;
 
 import javassist.NotFoundException;
 import lombok.AllArgsConstructor;
@@ -58,11 +60,11 @@ public class BatalhaService {
 	private PoderUnicoRepository pdrur;
 
 	// em construção
-	public ResponseEntity iniciarBatalha(Long idconta1, Long idconta2, Long selvagemId) throws Exception {
+	public Batalha iniciarBatalha(Long idconta1, Long idconta2, Long selvagemId) throws Exception {
 		Batalha bt = new Batalha();
 		
 		if (idconta1 < 1 && !(idconta2 > 0)) {
-			return ResponseEntity.status(400).body("Nenhum id válido foi informado");
+			throw new NotFoundException("Nenhum id válido foi informado");
 		}
 		else if(idconta1 > 0) {
 			bt = setPlayerIntoBattle(bt, idconta1);
@@ -75,7 +77,7 @@ public class BatalhaService {
 			bt = setWildPokemonIntoBattle(bt, selvagemId);
 		}
 		
-		return ResponseEntity.ok(BatalhaRepository.save(bt));
+		return BatalhaRepository.save(bt);
 	}
 
 	private Batalha setWildPokemonIntoBattle(Batalha bt, Long selvagemId) throws NotFoundException {
@@ -119,6 +121,11 @@ public class BatalhaService {
 	
 	public Batalha getBatalha(Long id) throws NotFoundException {
 		return Optional.ofNullable(BatalhaRepository.findById(id).get()).orElseThrow(() -> new NotFoundException("Batalha não encontrada"));
+	}
+	
+	public BatalhaResponse getBatalhaResponse(Long id)  throws NotFoundException {
+		return Converter.from(Optional.ofNullable(BatalhaRepository.findById(id).get()).orElseThrow(() -> new NotFoundException("Batalha não encontrada")),
+				personagemRepository, pokemonUnicoRepository, selvagemRepository);
 	}
 	
 	public void salvar(Batalha b) {
@@ -187,14 +194,14 @@ public class BatalhaService {
 
 		if((w.getHp_atual()-dano)<1){
 			w.setHp_atual(0);
-			bt.getPokemonSelvagem().setHp_atual(0);
+			bt.getPokemonSelvagem(selvagemRepository).setHp_atual(0);
 			wpms.salvar(w);
 			bt.setVencedorId(p.get().getPersonagemId());
 			salvar(bt);
 			var json = "dano:"+dano+",hp_inimigo: 0";
 			return ResponseEntity.ok(json);
 		}
-		bt.getPokemonSelvagem().setHp_atual(w.getHp_atual()-dano);
+		bt.getPokemonSelvagem(selvagemRepository).setHp_atual(w.getHp_atual()-dano);
 		w.setHp_atual(w.getHp_atual()-dano);
 		p.get().setStamina_atual(p.get().getStamina_atual()+1);
 		var json = "dano:"+dano+",hp_inimigo: "+w.getHp_atual()+",stamina_atual:"+p.get().getStamina_atual();

@@ -4,6 +4,7 @@ import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -34,16 +35,6 @@ import lombok.Setter;
 @Table(name = "batalhas")
 public class Batalha {
 	
-	@Transient
-	@Autowired
-	private PersonagemRepository repository;
-	@Transient
-	@Autowired
-	private PokemonUnicoRepository pokemonRepository;
-	@Transient
-	@Autowired
-	private WildPokemonRepository selvagemRepository;
-	
 	@EqualsAndHashCode.Include
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -56,10 +47,11 @@ public class Batalha {
 		
 	private Long pokemonSelvagemId;
 	
+	@Column(name = "vencedorId")
 	private Long vencedorId;
 	
 	
-	public Set<PokemonUnico> getAllPokemonsInBattlePlayer1() throws NotFoundException{
+	public Set<PokemonUnico> getAllPokemonsInBattlePlayer1(PersonagemRepository repository, PokemonUnicoRepository pokemonRepository) throws NotFoundException{
 		Set<PokemonUnico> list = new HashSet<>();
 		Personagem p = Optional.ofNullable(repository.findById_conta(id_conta1))
 				.orElseThrow(() -> new NotFoundException("Conta player 1 Não encontrada"));
@@ -74,7 +66,7 @@ public class Batalha {
 		return list;
 	}
 	
-	public Set<PokemonUnico> getAllPokemonsInBattlePlayer2() throws NotFoundException{
+	public Set<PokemonUnico> getAllPokemonsInBattlePlayer2(PersonagemRepository repository, PokemonUnicoRepository pokemonRepository) throws NotFoundException{
 		Set<PokemonUnico> list = new HashSet<>();
 		Personagem p = Optional.ofNullable(repository.findById_conta(id_conta2))
 				.orElseThrow(() -> new NotFoundException("Conta player 2 Não encontrada"));
@@ -89,12 +81,12 @@ public class Batalha {
 		return list;
 	}
 	
-	public WildPokemon getPokemonSelvagem() throws NotFoundException {
+	public WildPokemon getPokemonSelvagem(WildPokemonRepository selvagemRepository) throws NotFoundException {
 		return Optional.ofNullable(selvagemRepository.findById(this.pokemonSelvagemId).get())
 		.orElseThrow(() -> new NotFoundException("Pokemon selvagem não encontrado ou inixistente"));
 	}
 	
 	public Boolean playr1IsPresent() {
-		return id_conta1 > 0;
+		return id_conta1 != null && id_conta1 > 0;
 	}
 }

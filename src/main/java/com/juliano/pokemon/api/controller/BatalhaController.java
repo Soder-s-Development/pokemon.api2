@@ -1,28 +1,31 @@
 package com.juliano.pokemon.api.controller;
 
-import com.juliano.pokemon.api.Model.*;
-import com.juliano.pokemon.repository.BatalhaRepository;
-import com.juliano.pokemon.repository.PersonagemRepository;
-import com.juliano.pokemon.repository.PoderUnicoRepository;
-import com.juliano.pokemon.repository.PokemonUnicoRepository;
-import com.juliano.pokemon.repository.WildPokemonRepository;
-import com.juliano.pokemon.service.*;
+import java.util.Random;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.juliano.pokemon.api.Model.Batalha;
+import com.juliano.pokemon.api.Model.WildPokemon;
+import com.juliano.pokemon.config.RespostaPadrao;
+import com.juliano.pokemon.response.BatalhaResponse;
+import com.juliano.pokemon.service.BatalhaService;
+import com.juliano.pokemon.service.PokemonPoderService;
+import com.juliano.pokemon.service.WildPokemonService;
 
 import javassist.NotFoundException;
 import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
-
-import org.hibernate.annotations.Any;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
-
-import java.util.Optional;
-import java.util.Random;
 
 @RestController
 @RequestMapping("/batalha")
-@CrossOrigin(origins = {"http://localhost", "http://127.0.0.1", "http://0.0.0.0", "x-requested-with", "content-type"}, originPatterns = "*")
+@CrossOrigin(origins = {"*", "x-requested-with", "content-type"}, originPatterns = "*")
 @AllArgsConstructor
 public class BatalhaController {
 
@@ -33,10 +36,19 @@ public class BatalhaController {
 	@Autowired
 	private PokemonPoderService poderService;
 
-	@PostMapping("/{id1}")
-	public ResponseEntity<Any> iniciarBatalha(@PathVariable Long id1, 
-			@RequestParam(name="player2", required=false) Long id2, @RequestParam(name="selvagemId", required=false) Long selvagemId) throws Exception {
-		return service.iniciarBatalha(id1, id2, selvagemId);
+	@PostMapping("/novaBatalha")
+	public RespostaPadrao iniciarBatalha(
+			@RequestParam(name="player1", required=true) Long id1, 
+			@RequestParam(name="player2", required=false) Long id2,
+			@RequestParam(name="selvagemId", required=false) Long selvagemId) throws Exception {
+		Batalha b = service.iniciarBatalha(id1, id2, selvagemId);
+		return RespostaPadrao.builder().status(200).mensagem("Batalha iniciada com o id "+b.getId()).response(b).build();		
+	}
+	
+	@GetMapping("/batalha/{id}")
+	public RespostaPadrao getBatalha(@PathVariable Long id) throws NotFoundException {
+		BatalhaResponse b = service.getBatalhaResponse(id);
+		return RespostaPadrao.builder().mensagem("Batalha encontrada").status(200).response(b).build();
 	}
 
 	@GetMapping("/foundPokemon/{level}")

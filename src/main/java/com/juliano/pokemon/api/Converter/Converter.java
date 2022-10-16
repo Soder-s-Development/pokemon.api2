@@ -9,8 +9,11 @@ import com.juliano.pokemon.api.Model.Bolsa;
 import com.juliano.pokemon.api.Model.PoderUnico;
 import com.juliano.pokemon.api.Model.PokemonPoder;
 import com.juliano.pokemon.api.Model.PokemonUnico;
+import com.juliano.pokemon.repository.PersonagemRepository;
 import com.juliano.pokemon.repository.PoderRepository;
 import com.juliano.pokemon.repository.PoderUnicoRepository;
+import com.juliano.pokemon.repository.PokemonUnicoRepository;
+import com.juliano.pokemon.repository.WildPokemonRepository;
 import com.juliano.pokemon.response.BatalhaResponse;
 import com.juliano.pokemon.response.BolsaResponse;
 import com.juliano.pokemon.response.PoderesResponse;
@@ -44,18 +47,18 @@ public class Converter {
 		return b;
 	}
 	
-	public static BatalhaResponse from(Batalha b) throws NotFoundException {
+	public static BatalhaResponse from(Batalha b, PersonagemRepository repository, PokemonUnicoRepository unicoRepository, WildPokemonRepository selvagemRepository) throws NotFoundException {
 		BatalhaResponse response = new BatalhaResponse();
 		response.setId(b.getId());
 		response.setId_conta1(b.getId_conta1());
 		response.setId_conta2(b.getId_conta2());;
 		response.setVencedorId(b.getVencedorId());
-		response.setPokemonsPlayer1(b.getAllPokemonsInBattlePlayer1());
-		if(b.getId_conta2() > 0) {
-			response.setPokemonsPlayer2(b.getAllPokemonsInBattlePlayer2());
+		response.setPokemonsPlayer1(b.getAllPokemonsInBattlePlayer1(repository, unicoRepository));
+		if(b.getId_conta2() != null && b.getId_conta2() > 0) {
+			response.setPokemonsPlayer2(b.getAllPokemonsInBattlePlayer2(repository, unicoRepository));
 		}
 		if(b.getPokemonSelvagemId() > 0) {
-			response.setPokemonSelvagem(b.getPokemonSelvagem());
+			response.setPokemonSelvagem(b.getPokemonSelvagem(selvagemRepository));
 		}
 		return response;
 	}
