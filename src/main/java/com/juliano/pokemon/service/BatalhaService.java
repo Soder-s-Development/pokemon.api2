@@ -60,7 +60,7 @@ public class BatalhaService {
 	private PoderUnicoRepository pdrur;
 
 	// em construção
-	public Batalha iniciarBatalha(Long idconta1, Long idconta2, Long selvagemId) throws Exception {
+	public BatalhaResponse iniciarBatalha(Long idconta1, Long idconta2, Long selvagemId) throws Exception {
 		Batalha bt = new Batalha();
 		
 		if (idconta1 < 1 && !(idconta2 > 0)) {
@@ -77,7 +77,7 @@ public class BatalhaService {
 			bt = setWildPokemonIntoBattle(bt, selvagemId);
 		}
 		
-		return BatalhaRepository.save(bt);
+		return Converter.from(BatalhaRepository.save(bt), personagemRepository, pokemonUnicoRepository, selvagemRepository);
 	}
 
 	private Batalha setWildPokemonIntoBattle(Batalha bt, Long selvagemId) throws NotFoundException {
