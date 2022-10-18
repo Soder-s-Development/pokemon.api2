@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.juliano.pokemon.api.Model.Batalha;
 import com.juliano.pokemon.api.Model.WildPokemon;
 import com.juliano.pokemon.config.RespostaPadrao;
 import com.juliano.pokemon.response.BatalhaResponse;
@@ -49,9 +48,8 @@ public class BatalhaController {
 	}
 	
 	@GetMapping("/{id}")
-	public RespostaPadrao getBatalha(@PathVariable Long id) throws NotFoundException {
-		BatalhaResponse b = service.getBatalhaResponse(id);
-		return RespostaPadrao.builder().mensagem("Batalha encontrada").status(200).response(b).build();
+	public ResponseEntity<RespostaPadrao> getBatalha(@PathVariable Long id) throws NotFoundException {
+		return service.getBatalhaResponse(id);
 	}
 
 	@GetMapping("/foundPokemon/{level}")

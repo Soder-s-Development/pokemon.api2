@@ -16,6 +16,8 @@ import com.juliano.pokemon.api.Model.PoderUnico;
 import com.juliano.pokemon.api.Model.PokemonPoder;
 import com.juliano.pokemon.api.Model.PokemonUnico;
 import com.juliano.pokemon.api.Model.WildPokemon;
+import com.juliano.pokemon.config.CustonExceptionHandler;
+import com.juliano.pokemon.config.RespostaPadrao;
 import com.juliano.pokemon.repository.BatalhaRepository;
 import com.juliano.pokemon.repository.PersonagemRepository;
 import com.juliano.pokemon.repository.PoderUnicoRepository;
@@ -33,7 +35,7 @@ import lombok.NoArgsConstructor;
 public class BatalhaService {
 
 	@Autowired
-	private BatalhaRepository BatalhaRepository;
+	private BatalhaRepository batalhaRepository;
 	
 	@Autowired
 	private PersonagemRepository personagemRepository;
@@ -77,7 +79,7 @@ public class BatalhaService {
 			bt = setWildPokemonIntoBattle(bt, selvagemId);
 		}
 		
-		return Converter.from(BatalhaRepository.save(bt), personagemRepository, pokemonUnicoRepository, selvagemRepository);
+		return Converter.from(batalhaRepository.save(bt), personagemRepository, pokemonUnicoRepository, selvagemRepository);
 	}
 
 	private Batalha setWildPokemonIntoBattle(Batalha bt, Long selvagemId) throws NotFoundException {
@@ -120,16 +122,20 @@ public class BatalhaService {
 	}
 	
 	public Batalha getBatalha(Long id) throws NotFoundException {
-		return Optional.ofNullable(BatalhaRepository.findById(id).get()).orElseThrow(() -> new NotFoundException("Batalha não encontrada"));
+		return Optional.ofNullable(batalhaRepository.findById(id).get()).orElseThrow(() -> new NotFoundException("Batalha não encontrada"));
 	}
 	
-	public BatalhaResponse getBatalhaResponse(Long id)  throws NotFoundException {
-		return Converter.from(Optional.ofNullable(BatalhaRepository.findById(id).get()).orElseThrow(() -> new NotFoundException("Batalha não encontrada")),
-				personagemRepository, pokemonUnicoRepository, selvagemRepository);
+	public ResponseEntity<RespostaPadrao> getBatalhaResponse(Long id) throws NotFoundException{
+		Optional<Batalha> b = batalhaRepository.findById(id);
+		if(!b.isPresent()) {
+			return CustonExceptionHandler.notFound("Não encontrado batalha com o id "+id, 404, null);
+		}
+		BatalhaResponse response = Converter.from(b.get(), personagemRepository, pokemonUnicoRepository, selvagemRepository);
+		return ResponseEntity.ok(RespostaPadrao.builder().mensagem("Batalha encontrada").status(200).response(response).build());
 	}
 	
 	public void salvar(Batalha b) {
-		BatalhaRepository.save(b);
+		batalhaRepository.save(b);
 	}
 	
 	public ResponseEntity wildAttack(Long id1, Long id2, Long idp, Long btid) throws Exception {

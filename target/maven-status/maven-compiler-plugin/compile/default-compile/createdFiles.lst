@@ -2,6 +2,7 @@ com/juliano/pokemon/repository/BatalhaRepository.class
 com/juliano/pokemon/api/Model/PokemonExperiencia.class
 com/juliano/pokemon/service/PokemonPoderService.class
 com/juliano/pokemon/repository/PokemonUnicoRepository.class
+com/juliano/pokemon/config/RespostaPadrao.class
 com/juliano/pokemon/api/controller/BatalhaController.class
 com/juliano/pokemon/repository/ItemRepository.class
 com/juliano/pokemon/builder/BatalhaBuilder.class
@@ -18,9 +19,11 @@ com/juliano/pokemon/api/Model/Bolsa.class
 com/juliano/pokemon/response/BolsaResponse$BolsaResponseBuilder.class
 com/juliano/pokemon/repository/PokemonExperienciaRepository.class
 com/juliano/pokemon/api/Model/Batalha.class
+com/juliano/pokemon/config/CustonExceptionHandler.class
 com/juliano/pokemon/api/Model/Item$ItemBuilder.class
 com/juliano/pokemon/response/PokemonUnicoResponse.class
 com/juliano/pokemon/repository/PoderUnicoRepository.class
+com/juliano/pokemon/config/RespostaPadrao$RespostaPadraoBuilder.class
 com/juliano/pokemon/response/PokemonUnicoResponse$PokemonUnicoResponseBuilder.class
 com/juliano/pokemon/config/SecurityConfig.class
 com/juliano/pokemon/response/BatalhaResponse.class

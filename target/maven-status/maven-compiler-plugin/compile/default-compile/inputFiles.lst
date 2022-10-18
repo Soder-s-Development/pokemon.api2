@@ -12,6 +12,7 @@
 /home/soder/git/pokemon.api2/src/main/java/com/juliano/pokemon/api/Model/Personagem.java
 /home/soder/git/pokemon.api2/src/main/java/com/juliano/pokemon/service/BatalhaService.java
 /home/soder/git/pokemon.api2/src/main/java/com/juliano/pokemon/api/controller/PoderController.java
+/home/soder/git/pokemon.api2/src/main/java/com/juliano/pokemon/config/CustonExceptionHandler.java
 /home/soder/git/pokemon.api2/src/main/java/com/juliano/pokemon/api/controller/BatalhaController.java
 /home/soder/git/pokemon.api2/src/main/java/com/juliano/pokemon/service/PokemonUnicoService.java
 /home/soder/git/pokemon.api2/src/main/java/com/juliano/pokemon/Application.java
@@ -20,6 +21,7 @@
 /home/soder/git/pokemon.api2/src/main/java/com/juliano/pokemon/exceptionhandler/Problema.java
 /home/soder/git/pokemon.api2/src/main/java/com/juliano/pokemon/service/PokemonService.java
 /home/soder/git/pokemon.api2/src/main/java/com/juliano/pokemon/repository/BatalhaRepository.java
+/home/soder/git/pokemon.api2/src/main/java/com/juliano/pokemon/config/RespostaPadrao.java
 /home/soder/git/pokemon.api2/src/main/java/com/juliano/pokemon/api/Model/PokemonPoder.java
 /home/soder/git/pokemon.api2/src/main/java/com/juliano/pokemon/service/BolsaService.java
 /home/soder/git/pokemon.api2/src/main/java/com/juliano/pokemon/api/Model/PoderUnico.java
