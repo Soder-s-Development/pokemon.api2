@@ -20,6 +20,7 @@ import com.juliano.pokemon.config.CustonExceptionHandler;
 import com.juliano.pokemon.config.RespostaPadrao;
 import com.juliano.pokemon.repository.BatalhaRepository;
 import com.juliano.pokemon.repository.PersonagemRepository;
+import com.juliano.pokemon.repository.PoderRepository;
 import com.juliano.pokemon.repository.PoderUnicoRepository;
 import com.juliano.pokemon.repository.PokemonUnicoRepository;
 import com.juliano.pokemon.repository.WildPokemonRepository;
@@ -59,7 +60,10 @@ public class BatalhaService {
 	private PokemonService pkms;
 	
 	@Autowired
-	private PoderUnicoRepository pdrur;
+	private PoderUnicoRepository poderUnicoRepository;
+	
+	@Autowired
+	private PoderRepository poderRepository;
 
 	// em construção
 	public BatalhaResponse iniciarBatalha(Long idconta1, Long idconta2, Long selvagemId) throws Exception {
@@ -79,7 +83,7 @@ public class BatalhaService {
 			bt = setWildPokemonIntoBattle(bt, selvagemId);
 		}
 		
-		return Converter.from(batalhaRepository.save(bt), personagemRepository, pokemonUnicoRepository, selvagemRepository);
+		return Converter.from(batalhaRepository.save(bt), personagemRepository, pokemonUnicoRepository, selvagemRepository, poderUnicoRepository, poderRepository);
 	}
 
 	private Batalha setWildPokemonIntoBattle(Batalha bt, Long selvagemId) throws NotFoundException {
@@ -130,7 +134,7 @@ public class BatalhaService {
 		if(!b.isPresent()) {
 			return CustonExceptionHandler.notFound("Não encontrado batalha com o id "+id, 404, null);
 		}
-		BatalhaResponse response = Converter.from(b.get(), personagemRepository, pokemonUnicoRepository, selvagemRepository);
+		BatalhaResponse response = Converter.from(b.get(), personagemRepository, pokemonUnicoRepository, selvagemRepository, poderUnicoRepository, poderRepository);
 		return ResponseEntity.ok(RespostaPadrao.builder().mensagem("Batalha encontrada").status(200).response(response).build());
 	}
 	
@@ -138,7 +142,7 @@ public class BatalhaService {
 		batalhaRepository.save(b);
 	}
 	
-	public ResponseEntity wildAttack(Long id1, Long id2, Long idp, Long btid) throws Exception {
+	public ResponseEntity<String> wildAttack(Long id1, Long id2, Long idp, Long btid) throws Exception {
 		if ( idp < 1 ) idp = Long.valueOf(1);
 		if(id1 < 1 || id2 < 1 || id2 < 1 || btid < 1){
 			ResponseEntity.status(400)
@@ -177,7 +181,7 @@ public class BatalhaService {
 		return ResponseEntity.ok(res);
 	}
 
-	public ResponseEntity ataque(Long id1, Long id2, Long idPU, Long btid) throws NotFoundException {
+	public ResponseEntity<String> ataque(Long id1, Long id2, Long idPU, Long btid) throws NotFoundException {
 		if(id1 < 1 || id2 < 1 || id2 < 1 || idPU < 1 || btid < 1){
 			ResponseEntity.status(400)
 					.body("Parâmetros inválidos na requisição");
@@ -185,7 +189,7 @@ public class BatalhaService {
 		var p = pmus.getPokemonUnico(id1);
 		p = p != null ? p : null;
 		WildPokemon w = wpms.getWild(id2);
-		PoderUnico pu = pdrur.findById(idPU).get();
+		PoderUnico pu = poderUnicoRepository.findById(idPU).get();
 		PokemonPoder pp = poderService.getPoder(pu.getIdPoder());
 		
 		Batalha bt = getBatalha(btid);

@@ -47,15 +47,15 @@ public class Converter {
 		return b;
 	}
 	
-	public static BatalhaResponse from(Batalha b, PersonagemRepository repository, PokemonUnicoRepository unicoRepository, WildPokemonRepository selvagemRepository) throws NotFoundException {
+	public static BatalhaResponse from(Batalha b, PersonagemRepository repository, PokemonUnicoRepository unicoRepository, WildPokemonRepository selvagemRepository, PoderUnicoRepository poderUnicoRepository, PoderRepository poderRepository) throws NotFoundException {
 		BatalhaResponse response = new BatalhaResponse();
 		response.setId(b.getId());
 		response.setId_conta1(b.getId_conta1());
 		response.setId_conta2(b.getId_conta2());;
 		response.setVencedorId(b.getVencedorId());
-		response.setPokemonsPlayer1(b.getAllPokemonsInBattlePlayer1(repository, unicoRepository));
+		response.setPokemonsPlayer1(b.getAllPokemonsInBattlePlayer1(repository, unicoRepository, poderUnicoRepository, poderRepository));
 		if(b.getId_conta2() != null && b.getId_conta2() > 0) {
-			response.setPokemonsPlayer2(b.getAllPokemonsInBattlePlayer2(repository, unicoRepository));
+			response.setPokemonsPlayer2(b.getAllPokemonsInBattlePlayer2(repository, unicoRepository, poderUnicoRepository, poderRepository));
 		}
 		if(b.getPokemonSelvagemId() > 0) {
 			response.setPokemonSelvagem(b.getPokemonSelvagem(selvagemRepository));

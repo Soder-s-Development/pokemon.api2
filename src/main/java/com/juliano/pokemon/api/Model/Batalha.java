@@ -15,9 +15,13 @@ import javax.validation.constraints.NotNull;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
+import com.juliano.pokemon.api.Converter.Converter;
 import com.juliano.pokemon.repository.PersonagemRepository;
+import com.juliano.pokemon.repository.PoderRepository;
+import com.juliano.pokemon.repository.PoderUnicoRepository;
 import com.juliano.pokemon.repository.PokemonUnicoRepository;
 import com.juliano.pokemon.repository.WildPokemonRepository;
+import com.juliano.pokemon.response.PokemonUnicoResponse;
 
 import javassist.NotFoundException;
 import lombok.AllArgsConstructor;
@@ -51,14 +55,15 @@ public class Batalha {
 	private Long vencedorId;
 	
 	
-	public Set<PokemonUnico> getAllPokemonsInBattlePlayer1(PersonagemRepository repository, PokemonUnicoRepository pokemonRepository) throws NotFoundException{
-		Set<PokemonUnico> list = new HashSet<>();
+	public Set<PokemonUnicoResponse> getAllPokemonsInBattlePlayer1(PersonagemRepository repository, PokemonUnicoRepository pokemonRepository, PoderUnicoRepository poderUnicoRepository, PoderRepository poderRepository) throws NotFoundException{
+		Set<PokemonUnicoResponse> list = new HashSet<>();
 		Personagem p = Optional.ofNullable(repository.findById_conta(id_conta1))
 				.orElseThrow(() -> new NotFoundException("Conta player 1 Não encontrada"));
 		
 		p.getHolds().forEach(id -> {
 			try {
-				list.add(Optional.ofNullable(pokemonRepository.findById(id).get()).orElseThrow(() -> new NotFoundException("Erro ao buscar pokemon")));
+				PokemonUnico pkm = Optional.ofNullable(pokemonRepository.findById(id).get()).orElseThrow(() -> new NotFoundException("Erro ao buscar pokemon"));
+				list.add(Converter.from(pkm, poderUnicoRepository, poderRepository));
 			} catch (NotFoundException e) {
 				e.printStackTrace();
 			}
@@ -66,14 +71,15 @@ public class Batalha {
 		return list;
 	}
 	
-	public Set<PokemonUnico> getAllPokemonsInBattlePlayer2(PersonagemRepository repository, PokemonUnicoRepository pokemonRepository) throws NotFoundException{
-		Set<PokemonUnico> list = new HashSet<>();
+	public Set<PokemonUnicoResponse> getAllPokemonsInBattlePlayer2(PersonagemRepository repository, PokemonUnicoRepository pokemonRepository, PoderUnicoRepository poderUnicoRepository, PoderRepository poderRepository) throws NotFoundException{
+		Set<PokemonUnicoResponse> list = new HashSet<>();
 		Personagem p = Optional.ofNullable(repository.findById_conta(id_conta2))
 				.orElseThrow(() -> new NotFoundException("Conta player 2 Não encontrada"));
 		
 		p.getHolds().forEach(id -> {
 			try {
-				list.add(Optional.ofNullable(pokemonRepository.findById(id).get()).orElseThrow(() -> new NotFoundException("Erro ao buscar pokemon")));
+				PokemonUnico pkm = Optional.ofNullable(pokemonRepository.findById(id).get()).orElseThrow(() -> new NotFoundException("Erro ao buscar pokemon"));
+				list.add(Converter.from(pkm, poderUnicoRepository, poderRepository));
 			} catch (NotFoundException e) {
 				e.printStackTrace();
 			}
