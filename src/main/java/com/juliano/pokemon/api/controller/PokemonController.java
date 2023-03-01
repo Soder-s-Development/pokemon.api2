@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.juliano.pokemon.api.Model.Pokemon;
 import com.juliano.pokemon.service.PokemonService;
-import com.juliano.pokemon.service.PokemonUnicoService;
+import com.juliano.pokemon.service.impl.PokemonUnicoServiceImpl;
 
 import lombok.AllArgsConstructor;
 
@@ -37,7 +37,7 @@ public class PokemonController {
 	@Autowired
 	private PokemonService pservice;
 	@Autowired
-	private PokemonUnicoService puservice;
+	private PokemonUnicoServiceImpl puservice;
 	
 	@GetMapping
 	public List<Pokemon> listar() {

@@ -6,7 +6,7 @@ import com.juliano.pokemon.repository.PoderRepository;
 import com.juliano.pokemon.repository.PoderUnicoRepository;
 import com.juliano.pokemon.response.PoderesResponse;
 import com.juliano.pokemon.service.PokemonPoderService;
-import com.juliano.pokemon.service.PokemonUnicoService;
+import com.juliano.pokemon.service.impl.PokemonUnicoServiceImpl;
 
 import javassist.NotFoundException;
 import lombok.AllArgsConstructor;
@@ -32,7 +32,7 @@ public class PoderUnicoController {
 	@Autowired
 	private PoderRepository pr;
 	@Autowired
-	private PokemonUnicoService pkus;
+	private PokemonUnicoServiceImpl pkus;
 	
 	@Autowired
 	private PokemonPoderService service;

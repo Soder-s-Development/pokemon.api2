@@ -21,7 +21,7 @@ import com.juliano.pokemon.repository.BolsaRepository;
 import com.juliano.pokemon.response.BolsaResponse;
 import com.juliano.pokemon.service.BolsaService;
 import com.juliano.pokemon.service.PokemonService;
-import com.juliano.pokemon.service.PokemonUnicoService;
+import com.juliano.pokemon.service.impl.PokemonUnicoServiceImpl;
 
 import javassist.NotFoundException;
 import lombok.AllArgsConstructor;

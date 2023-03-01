@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.juliano.pokemon.api.Converter.Converter;
 import com.juliano.pokemon.api.Model.PokemonUnico;
 import com.juliano.pokemon.repository.PokemonExperienciaRepository;
 import com.juliano.pokemon.repository.PokemonUnicoRepository;
@@ -36,7 +35,7 @@ public class PokemonUnicoController {
 	private PokemonUnicoService service;
 	
 	@GetMapping("/{id}")
-	public ResponseEntity<PokemonUnicoResponse> getPoke(@PathVariable Long id) throws NotFoundException {
+	public ResponseEntity<?> getPoke(@PathVariable Long id) {
 		return service.getPokemonUnicoResponse(id);
 	}
 	

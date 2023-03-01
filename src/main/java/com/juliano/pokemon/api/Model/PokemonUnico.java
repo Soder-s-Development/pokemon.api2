@@ -46,6 +46,7 @@ public class PokemonUnico{
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
+	
 	@NotNull
 	private Long id_pokemon;
 	

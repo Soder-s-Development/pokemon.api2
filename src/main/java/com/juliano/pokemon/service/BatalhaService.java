@@ -25,6 +25,7 @@ import com.juliano.pokemon.repository.PoderUnicoRepository;
 import com.juliano.pokemon.repository.PokemonUnicoRepository;
 import com.juliano.pokemon.repository.WildPokemonRepository;
 import com.juliano.pokemon.response.BatalhaResponse;
+import com.juliano.pokemon.service.impl.PokemonUnicoServiceImpl;
 
 import javassist.NotFoundException;
 import lombok.AllArgsConstructor;
@@ -48,7 +49,7 @@ public class BatalhaService {
 	private WildPokemonRepository selvagemRepository;
 	
 	@Autowired
-	private PokemonUnicoService pmus;
+	private PokemonUnicoServiceImpl pmus;
 	
 	@Autowired
 	private WildPokemonService wpms;
