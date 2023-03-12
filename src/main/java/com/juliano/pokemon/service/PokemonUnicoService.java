@@ -4,10 +4,10 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Service;
 
 import com.juliano.pokemon.api.Model.PoderUnico;
 import com.juliano.pokemon.api.Model.PokemonUnico;
+import com.juliano.pokemon.config.RespostaPadrao;
 import com.juliano.pokemon.response.PokemonUnicoResponse;
 
 import javassist.NotFoundException;
@@ -23,9 +23,11 @@ public interface PokemonUnicoService {
 
 	public void salvar(PokemonUnico p);
 	
+	public ResponseEntity<?> deletePokemon(Long id);
+	
 	public ResponseEntity<?> getPokemonUnicoResponse(Long id);
 
-	public List<PokemonUnico> getAllMyPokemons(Long personagemId) throws NotFoundException;
+	public ResponseEntity<RespostaPadrao> getAllMyPokemons(Long personagemId) throws NotFoundException;
 	
 	public List<PokemonUnicoResponse> getAllMyHoldsPokemons(Long personagemId) throws NotFoundException;
 }

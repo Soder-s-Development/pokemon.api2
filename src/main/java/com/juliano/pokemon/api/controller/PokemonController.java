@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.juliano.pokemon.api.Model.Pokemon;
+import com.juliano.pokemon.config.RespostaPadrao;
 import com.juliano.pokemon.service.PokemonService;
 import com.juliano.pokemon.service.impl.PokemonUnicoServiceImpl;
 
@@ -64,9 +65,12 @@ public class PokemonController {
 	}
 
 	@GetMapping("/estado/{id}")
-	public int getEvolucao(@PathVariable Long id){
+	public ResponseEntity<RespostaPadrao> getEvolucao(@PathVariable Long id){
 		Integer i = pservice.getEstado(id);
-		return i <= 0 ? 0 : i;
+		if(i == -1) {
+			return ResponseEntity.badRequest().body(RespostaPadrao.builder().status(404).mensagem("Not exist pokemon for this id yet").build());
+		}
+		return i <= 0 ? ResponseEntity.ok(RespostaPadrao.builder().status(200).response(0).build()) : ResponseEntity.ok(RespostaPadrao.builder().status(200).response(i).build());
 	}
 			
 //	@GetMapping("/unico/{id}")

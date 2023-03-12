@@ -88,31 +88,34 @@ public class PokemonUnicoServiceImpl implements PokemonUnicoService{
 	public ResponseEntity getPokemonUnicoResponse(Long id) {
 		Optional<PokemonUnico> optional = pkuRepository.findById(id);
 		if(!optional.isPresent()) {
-			return CustonExceptionHandler.notFound("Pokemon not found for this id", 404, optional);
+			return CustonExceptionHandler.notFound("Pokemon not found for this id: "+id, 404, optional);
 		}
 		PokemonUnico p = optional.get();
 		return ResponseEntity.ok(from(p, poderUnicoRepository, poderRepository));
 	}
 	
-	public ResponseEntity<Boolean> deletePokemon(Long id){
+	public ResponseEntity<?> deletePokemon(Long id){
+		if(pkuRepository.recordExist(id) == 0) {
+			return CustonExceptionHandler.notFound("Not pokemon found for id: "+id, 404, null);
+		}
 		experienceRepository.deleteById(id);
 		pkuRepository.deleteById(id);
 		return ResponseEntity.ok(true);
 	}
 
-	public List<PokemonUnico> getAllMyPokemons(Long personagemId) throws NotFoundException {
-		 return Optional.ofNullable(pkuRepository.findAllByPersonagemId(personagemId))
-				 .orElseThrow(() -> new NotFoundException("Nenhum pokemon encontradoo com o id de personagem: "+personagemId));
+	public ResponseEntity<RespostaPadrao> getAllMyPokemons(Long personagemId) {
+		 List<PokemonUnico> pokemons = Optional.ofNullable(pkuRepository.findAllByPersonagemId(personagemId)).orElse(new ArrayList<>());
+		 return ResponseEntity.ok(RespostaPadrao.builder().status(200).response(pokemons).build());
 	}
 
 	public List<PokemonUnicoResponse> getAllMyHoldsPokemons(Long personagemId) throws NotFoundException {
 		Personagem p = Optional.ofNullable(personagemRepository.findById(personagemId).get())
-				.orElseThrow(() -> new NotFoundException("Nenhum personagem encontradoo com o id: "+personagemId));
+				.orElseThrow(() -> new NotFoundException("Nenhum personagem encontrado com o id: "+personagemId));
 		List<PokemonUnicoResponse> pokemons = new ArrayList<>();
 		p.getHolds().forEach(id -> {
 			try {
 				pokemons.add(Converter.from(Optional.ofNullable(pkuRepository.findById(id).get())
-						.orElseThrow(() -> new NotFoundException("N'ao foi encontrado o pokemon deste id: "+id)), poderUnicoRepository, poderRepository));
+						.orElseThrow(() -> new NotFoundException("Nao foi encontrado o pokemon deste id: "+id)), poderUnicoRepository, poderRepository));
 			} catch (NotFoundException e) {
 				e.printStackTrace();
 			}

@@ -7,6 +7,12 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+/***
+ * 
+ * @author soder
+ * @apiNote Default response for all endpoints calls
+ *
+ */
 @Builder
 @Getter
 @Setter
@@ -15,6 +21,7 @@ import lombok.Setter;
 @AllArgsConstructor
 public class RespostaPadrao {
 	
+
 	private String mensagem;
 	
 	private int status;

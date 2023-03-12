@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.juliano.pokemon.api.Model.PokemonUnico;
+import com.juliano.pokemon.config.RespostaPadrao;
 import com.juliano.pokemon.repository.PokemonExperienciaRepository;
 import com.juliano.pokemon.repository.PokemonUnicoRepository;
 import com.juliano.pokemon.response.PokemonUnicoResponse;
@@ -40,15 +40,13 @@ public class PokemonUnicoController {
 	}
 	
 	@DeleteMapping("/{id}")
-	public boolean delete(@PathVariable Long id) {
-		pmer.deleteById(id);
-		pkmur.deleteById(id);
-		return true;
+	public ResponseEntity<?> delete(@PathVariable Long id) {
+		return service.deletePokemon(id);
 	}
 	
 	@GetMapping("/all/{personagemId}")
-	public ResponseEntity<List<PokemonUnico>> getAllMyPokemons(@PathVariable Long personagemId) throws NotFoundException{
-		return ResponseEntity.ok(service.getAllMyPokemons(personagemId));
+	public ResponseEntity<RespostaPadrao> getAllMyPokemons(@PathVariable Long personagemId) throws NotFoundException{
+		return service.getAllMyPokemons(personagemId);
 	}
 	
 	@GetMapping("/holds/{personagemId}")

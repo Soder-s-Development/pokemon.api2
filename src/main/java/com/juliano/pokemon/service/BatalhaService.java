@@ -92,10 +92,6 @@ public class BatalhaService {
 		return bt;
 	}
 
-	public boolean teste() {
-		return true;
-	}
-
 	@SuppressWarnings("unused")
 	private Batalha setPlayerIntoBattle(Batalha bt, Long idconta) throws Exception {
 		Personagem p = personagemRepository.findById_conta(idconta);

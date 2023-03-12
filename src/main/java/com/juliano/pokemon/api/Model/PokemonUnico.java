@@ -101,6 +101,7 @@ public class PokemonUnico{
 		
 		System.out.println("pokemon capturado! Genero -> "+this.genero);
 	}
+	
 	public void evoluir(PokemonUnico pkmunico, Pokemon pkm){
 		this.tipo = pkm.getTipo();
 		this.id_pokemon = pkm.getId();
